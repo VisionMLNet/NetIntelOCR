@@ -1,5 +1,7 @@
 Business Source License 1.1
+
 License text copyright © 2024 Unovie Software LLC, All Rights Reserved. 
+
 "Business Source License" is a trademark of Unovie Software LLC.
 
 Terms
