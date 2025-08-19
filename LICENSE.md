@@ -29,4 +29,4 @@ Copyright (C) 2024 unovie
 Use of this software is governed by the Business Source License included in the LICENSE.TXT file and at www.unovie.com/bsl11.
 Change Date: Dec 2028
 
-On the date above, in accordance with the Business Source License, use of this software will be governed by the open source license specified in the LICENSE.TXT file.
+On the date above, in accordance with the Business Source License, use of this software will be governed by the open source license specified in the LICENSE.md file.
