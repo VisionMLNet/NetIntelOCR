@@ -4,6 +4,33 @@
 
 ## Quick Start
 
+### Installation
+
+```bash
+# Install NetIntel-OCR from PyPI
+pip install netintel-ocr
+
+# Verify installation
+netintel-ocr --version
+make sure your using the latest version found in https://pypi.org/project/netintel-ocr/
+
+# Initilizae the project
+netintel-ocr --init
+```
+
+### Prerequisites
+
+```bash
+# Install and start Ollama (required for AI processing)
+curl -fsSL https://ollama.com/install.sh | sh
+ollama serve
+
+# Pull required models
+ollama pull nanonets-ocr-s:latest
+ollama pull qwen2.5vl:latest
+ollama pull qwen3-embedding:4b
+```
+
 ### Basic Usage
 ```bash
 # Process entire PDF with automatic detection (default)
