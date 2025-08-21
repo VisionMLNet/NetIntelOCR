@@ -1,8 +1,8 @@
 Business Source License 1.1
 
-License text copyright © 2024 Unovie Software LLC, All Rights Reserved. 
+License text copyright © 2024 VisionML.Net, All Rights Reserved. 
 
-"Business Source License" is a trademark of Unovie Software LLC.
+"Business Source License" is a trademark of VisionML.Net.
 
 Terms
 
@@ -22,11 +22,11 @@ This License does not grant you any right in any trademark or logo of Licensor o
 
 TO THE EXTENT PERMITTED BY APPLICABLE LAW, THE LICENSED WORK IS PROVIDED ON AN "AS IS" BASIS. LICENSOR HEREBY DISCLAIMS ALL WARRANTIES AND CONDITIONS, EXPRESS OR IMPLIED, INCLUDING (WITHOUT LIMITATION) WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, NON-INFRINGEMENT, AND TITLE.
 
-Unovie Software LLC hereby grants you permission to use this License's text to license your works, and to refer to it using the trademark "Business Source License", as long as you comply with the Covenants of Licensor below.
+VisionML Net hereby grants you permission to use this License's text to license your works, and to refer to it using the trademark "Business Source License", as long as you comply with the Covenants of Licensor below.
 
 Covenants of Licensor
 
-In consideration of the right to use this License's text and the "Business Source License" name and trademark, Licensor covenants to Unovie Software LLC, and to all other recipients of the licensed work to be provided by Licensor:
+In consideration of the right to use this License's text and the "Business Source License" name and trademark, Licensor covenants to VisionML Net, and to all other recipients of the licensed work to be provided by Licensor:
 
 To specify as the Change License the GPL Version 2.0 or any later version, or a license that is compatible with GPL Version 2.0 or a later version, where "compatible" means that software provided under the Change License can be included in a program with software provided under GPL Version 2.0 or a later version. Licensor may specify additional Change Licenses without limitation.
 
@@ -38,7 +38,7 @@ Not to modify this License in any other way.
 
 Standard License Header
 Copyright (C) 2024 unovie
-Use of this software is governed by the Business Source License included in the LICENSE.TXT file and at www.unovie.com/bsl11.
+Use of this software is governed by the Business Source License included in the LICENSE.TXT file and at https://visionml.net/bsl11.
 Change Date: Dec 2028
 
 On the date above, in accordance with the Business Source License, use of this software will be governed by the open source license specified in the LICENSE.md file.
