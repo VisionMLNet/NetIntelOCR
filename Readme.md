@@ -4,6 +4,112 @@
 
 NetIntel-OCR is an intelligent document processing system that automatically extracts and converts network diagrams, tables, and text from PDF documents into structured, searchable data. The system leverages multimodal AI models to understand both visual and textual content, creating a comprehensive knowledge base with vector search capabilities.
 
+## Quick Start
+
+### Installation
+
+```bash
+# Install NetIntel-OCR from PyPI
+pip install netintel-ocr
+
+# Verify installation
+netintel-ocr --version
+```
+
+### Prerequisites
+
+```bash
+# Install and start Ollama (required for AI processing)
+curl -fsSL https://ollama.com/install.sh | sh
+ollama serve
+
+# Pull required models
+ollama pull nanonets-ocr-s:latest
+ollama pull qwen2.5vl:latest
+```
+
+### Initialize Project
+
+```bash
+# Create a new NetIntel-OCR project with Docker and configuration
+netintel-ocr --init
+
+# This creates:
+# ├── docker/           # Docker configuration
+# ├── helm/            # Kubernetes charts
+# ├── config/          # Configuration files
+# ├── input/           # PDF input directory
+# └── output/          # Processing output
+```
+
+### Simple Extraction Example
+
+```bash
+# 1. Basic PDF processing (text + diagrams + tables)
+netintel-ocr document.pdf
+
+# 2. Process with specific options
+netintel-ocr report.pdf --output ./results --keep-images
+
+# 3. Fast text-only extraction
+netintel-ocr document.pdf --text-only
+
+# 4. Extract network diagrams
+netintel-ocr network-topology.pdf --network-only
+
+# 5. Batch process multiple PDFs
+netintel-ocr --batch-ingest --input-pattern "*.pdf" --parallel 4
+
+# 6. Query processed documents
+netintel-ocr --query "firewall configuration"
+
+# 7. View what was created
+ls output/
+# Output structure:
+# output/
+# ├── index.md                    # Document index
+# └── abc123.../                  # Unique folder per document
+#     ├── markdown/               # Extracted text
+#     │   └── document.md        # Complete document
+#     ├── lancedb/               # Vector database
+#     │   └── chunks.jsonl       # Searchable chunks
+#     └── tables/                # Extracted tables
+```
+
+### Complete Workflow Example
+
+```bash
+# Step 1: Install
+pip install netintel-ocr
+
+# Step 2: Initialize project
+netintel-ocr --init
+cd netintel-ocr
+
+# Step 3: Process a document
+netintel-ocr sample.pdf
+
+# Step 4: Process multiple documents
+netintel-ocr --batch-ingest --input-pattern "docs/*.pdf"
+
+# Step 5: Merge to centralized database
+netintel-ocr --merge-to-centralized
+
+# Step 6: Search your documents
+netintel-ocr --query "network security" --output-format markdown
+
+# Step 7: View statistics
+netintel-ocr --db-stats
+```
+
+### Docker Quick Start
+
+```bash
+# Using Docker (after --init)
+docker-compose up -d
+docker exec netintel-ocr netintel-ocr /input/document.pdf
+```
+
 ## System Architecture
 
 ### High-Level Component Diagram
