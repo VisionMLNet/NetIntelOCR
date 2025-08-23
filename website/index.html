@@ -1,0 +1,2093 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VisionML.Net - Enterprise Semantic CMDB Platform</title>
+    <meta name="description" content="Transform network infrastructure into self-learning knowledge graphs. VisionML.Net delivers enterprise Semantic CMDB capabilities, powered by NetIntel-OCR - our open-source intelligent document processing foundation.">
+    
+    <!-- Favicon using inline SVG data URI -->
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cdefs%3E%3ClinearGradient id='g1' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' style='stop-color:%23667eea'/%3E%3Cstop offset='100%25' style='stop-color:%23764ba2'/%3E%3C/linearGradient%3E%3ClinearGradient id='g2' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' style='stop-color:%23f59e0b'/%3E%3Cstop offset='100%25' style='stop-color:%23dc2626'/%3E%3C/linearGradient%3E%3C/defs%3E%3Cpath d='M50 5 L85 25 L85 75 L50 95 L15 75 L15 25 Z' fill='none' stroke='url(%23g1)' stroke-width='3'/%3E%3Ccircle cx='50' cy='30' r='4' fill='url(%23g1)'/%3E%3Ccircle cx='30' cy='50' r='4' fill='url(%23g1)'/%3E%3Ccircle cx='70' cy='50' r='4' fill='url(%23g1)'/%3E%3Ccircle cx='50' cy='70' r='4' fill='url(%23g1)'/%3E%3Cline x1='50' y1='30' x2='30' y2='50' stroke='url(%23g1)' stroke-width='1.5' opacity='0.6'/%3E%3Cline x1='50' y1='30' x2='70' y2='50' stroke='url(%23g1)' stroke-width='1.5' opacity='0.6'/%3E%3Cline x1='30' y1='50' x2='50' y2='70' stroke='url(%23g1)' stroke-width='1.5' opacity='0.6'/%3E%3Cline x1='70' y1='50' x2='50' y2='70' stroke='url(%23g1)' stroke-width='1.5' opacity='0.6'/%3E%3Ccircle cx='50' cy='50' r='12' fill='white' stroke='url(%23g2)' stroke-width='2'/%3E%3Ccircle cx='50' cy='50' r='6' fill='url(%23g2)'/%3E%3C/svg%3E">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Alpine.js for interactivity -->
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Custom styles -->
+    <style>
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+        
+        .animate-float {
+            animation: float 6s ease-in-out infinite;
+        }
+        
+        .gradient-text {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .glass-effect {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .feature-card {
+            transition: all 0.3s ease;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+<body class="bg-gray-50" x-data="{ mobileMenu: false, currentTab: 'overview' }">
+    
+    <!-- Navigation -->
+    <nav class="fixed w-full z-50 bg-white/95 backdrop-blur-sm border-b border-gray-200">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center">
+                    <div class="flex-shrink-0 flex items-center">
+                        <!-- VisionML.Net Logo -->
+                        <svg class="w-10 h-10 mr-3" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                            <!-- Outer hexagon representing network -->
+                            <defs>
+                                <linearGradient id="logoGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                                    <stop offset="0%" style="stop-color:#667eea;stop-opacity:1" />
+                                    <stop offset="100%" style="stop-color:#764ba2;stop-opacity:1" />
+                                </linearGradient>
+                                <linearGradient id="innerGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                                    <stop offset="0%" style="stop-color:#f59e0b;stop-opacity:1" />
+                                    <stop offset="100%" style="stop-color:#dc2626;stop-opacity:1" />
+                                </linearGradient>
+                            </defs>
+                            
+                            <!-- Network hexagon frame -->
+                            <path d="M50 5 L85 25 L85 75 L50 95 L15 75 L15 25 Z" 
+                                  fill="none" 
+                                  stroke="url(#logoGradient)" 
+                                  stroke-width="3"/>
+                            
+                            <!-- Inner neural network connections -->
+                            <circle cx="50" cy="30" r="4" fill="url(#logoGradient)"/>
+                            <circle cx="30" cy="50" r="4" fill="url(#logoGradient)"/>
+                            <circle cx="70" cy="50" r="4" fill="url(#logoGradient)"/>
+                            <circle cx="50" cy="70" r="4" fill="url(#logoGradient)"/>
+                            
+                            <!-- Connection lines -->
+                            <line x1="50" y1="30" x2="30" y2="50" stroke="url(#logoGradient)" stroke-width="1.5" opacity="0.6"/>
+                            <line x1="50" y1="30" x2="70" y2="50" stroke="url(#logoGradient)" stroke-width="1.5" opacity="0.6"/>
+                            <line x1="30" y1="50" x2="50" y2="70" stroke="url(#logoGradient)" stroke-width="1.5" opacity="0.6"/>
+                            <line x1="70" y1="50" x2="50" y2="70" stroke="url(#logoGradient)" stroke-width="1.5" opacity="0.6"/>
+                            <line x1="30" y1="50" x2="70" y2="50" stroke="url(#logoGradient)" stroke-width="1.5" opacity="0.6"/>
+                            <line x1="50" y1="30" x2="50" y2="70" stroke="url(#logoGradient)" stroke-width="1.5" opacity="0.6"/>
+                            
+                            <!-- Central AI brain/eye symbol -->
+                            <circle cx="50" cy="50" r="12" fill="white" stroke="url(#innerGradient)" stroke-width="2"/>
+                            <circle cx="50" cy="50" r="6" fill="url(#innerGradient)"/>
+                            <circle cx="52" cy="48" r="2" fill="white" opacity="0.9"/>
+                        </svg>
+                        <h1 class="text-2xl font-bold gradient-text">VisionML.Net</h1>
+                    </div>
+                    <div class="hidden md:block ml-10">
+                        <div class="flex items-baseline space-x-4">
+                            <a href="#features" class="text-gray-700 hover:text-indigo-600 px-3 py-2 rounded-md text-sm font-medium transition">Features</a>
+                            <a href="#architecture" class="text-gray-700 hover:text-indigo-600 px-3 py-2 rounded-md text-sm font-medium transition">Architecture</a>
+                            <a href="#deployment" class="text-gray-700 hover:text-indigo-600 px-3 py-2 rounded-md text-sm font-medium transition">Deployment</a>
+                            <a href="#pricing" class="text-gray-700 hover:text-indigo-600 px-3 py-2 rounded-md text-sm font-medium transition">Pricing</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="hidden md:flex items-center space-x-4">
+                    <a href="https://github.com/visionml/netintel-ocr" class="text-gray-700 hover:text-indigo-600" title="NetIntel-OCR on GitHub">
+                        <i class="fab fa-github text-2xl"></i>
+                    </a>
+                    <button class="bg-indigo-600 text-white px-6 py-2 rounded-lg hover:bg-indigo-700 transition">
+                        Get Started
+                    </button>
+                </div>
+                <div class="md:hidden">
+                    <button @click="mobileMenu = !mobileMenu" class="text-gray-700">
+                        <i class="fas fa-bars text-xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Mobile menu -->
+        <div x-show="mobileMenu" x-transition class="md:hidden bg-white border-t border-gray-200">
+            <div class="px-2 pt-2 pb-3 space-y-1">
+                <a href="#features" class="block text-gray-700 hover:text-indigo-600 px-3 py-2 rounded-md text-base font-medium">Features</a>
+                <a href="#architecture" class="block text-gray-700 hover:text-indigo-600 px-3 py-2 rounded-md text-base font-medium">Architecture</a>
+                <a href="#deployment" class="block text-gray-700 hover:text-indigo-600 px-3 py-2 rounded-md text-base font-medium">Deployment</a>
+                <a href="#pricing" class="block text-gray-700 hover:text-indigo-600 px-3 py-2 rounded-md text-base font-medium">Pricing</a>
+            </div>
+        </div>
+    </nav>
+    
+    <!-- Hero Section -->
+    <section class="pt-24 pb-12 bg-gradient-to-br from-indigo-50 via-white to-purple-50">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid lg:grid-cols-2 gap-12 items-center">
+                <div>
+                    <div class="space-y-2 mb-6">
+                        <div class="inline-flex items-center px-3 py-1 bg-green-100 rounded-full mr-2">
+                            <i class="fas fa-code-branch text-green-700 mr-2"></i>
+                            <span class="text-green-700 font-semibold text-sm">100% Open Source Today</span>
+                        </div>
+                        <div class="inline-flex items-center px-3 py-1 bg-gradient-to-r from-purple-100 to-indigo-100 rounded-full">
+                            <span class="text-indigo-700 font-semibold text-sm">⚡ Enterprise Semantic CMDB Tomorrow</span>
+                        </div>
+                    </div>
+                    <h2 class="text-5xl font-bold text-gray-900 mb-6">
+                        The Enterprise Platform for
+                        <span class="gradient-text">Self-Learning Semantic CMDBs</span>
+                    </h2>
+                    <p class="text-xl text-gray-600 mb-4">
+                        <strong>VisionML.Net</strong> is pioneering the transformation of network infrastructure management through 
+                        Semantic CMDB technology with self-updating knowledge graphs.
+                    </p>
+                    <p class="text-xl text-gray-600 mb-8">
+                        Start your journey today with <span class="font-semibold text-indigo-600">NetIntel-OCR</span>, our free, 
+                        open-source foundation that extracts network intelligence from documents - the first step toward 
+                        tomorrow's self-learning enterprise CMDBs.
+                    </p>
+                    <div class="flex flex-col sm:flex-row gap-4">
+                        <button class="bg-gradient-to-r from-indigo-600 to-purple-600 text-white px-8 py-3 rounded-lg hover:from-indigo-700 hover:to-purple-700 transition flex items-center justify-center">
+                            <i class="fas fa-play mr-2"></i> Start Your CMDB Journey
+                        </button>
+                        <button class="border-2 border-indigo-600 text-indigo-600 px-8 py-3 rounded-lg hover:bg-indigo-50 transition flex items-center justify-center">
+                            <i class="fas fa-route mr-2"></i> View Roadmap
+                        </button>
+                    </div>
+                    <div class="mt-8 flex flex-wrap gap-4 text-sm">
+                        <div class="flex items-center bg-red-50 px-3 py-1 rounded-full">
+                            <i class="fas fa-lock text-red-600 mr-2"></i>
+                            <span class="text-red-700 font-semibold">100% Private Mode</span>
+                        </div>
+                        <div class="flex items-center bg-blue-50 px-3 py-1 rounded-full">
+                            <i class="fas fa-shield-alt text-blue-600 mr-2"></i>
+                            <span class="text-blue-700 font-semibold">Zero Data Leakage</span>
+                        </div>
+                        <div class="flex items-center bg-green-50 px-3 py-1 rounded-full">
+                            <i class="fas fa-check-circle text-green-600 mr-2"></i>
+                            <span class="text-green-700 font-semibold">Compliance Ready</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="relative">
+                    <div class="animate-float">
+                        <div class="bg-white rounded-xl shadow-2xl p-6">
+                            <div class="bg-gradient-to-r from-indigo-500 to-purple-600 text-white p-4 rounded-t-lg -mt-6 -mx-6 mb-4">
+                                <div class="flex items-center justify-between">
+                                    <span class="font-semibold">The Semantic CMDB Evolution</span>
+                                    <i class="fas fa-route"></i>
+                                </div>
+                            </div>
+                            <div class="space-y-4">
+                                <div class="flex items-center">
+                                    <div class="w-10 h-10 bg-green-100 rounded-lg flex items-center justify-center mr-3">
+                                        <i class="fas fa-check text-green-600"></i>
+                                    </div>
+                                    <div>
+                                        <div class="text-sm text-gray-600">Phase 1: Document Intelligence</div>
+                                        <div class="font-semibold">Available Now</div>
+                                    </div>
+                                </div>
+                                <div class="flex items-center">
+                                    <div class="w-10 h-10 bg-yellow-100 rounded-lg flex items-center justify-center mr-3">
+                                        <i class="fas fa-code-branch text-yellow-600"></i>
+                                    </div>
+                                    <div>
+                                        <div class="text-sm text-gray-600">Phase 2: RDF Generation</div>
+                                        <div class="font-semibold">Roadmap Q4 2025</div>
+                                    </div>
+                                </div>
+                                <div class="flex items-center">
+                                    <div class="w-10 h-10 bg-purple-100 rounded-lg flex items-center justify-center mr-3">
+                                        <i class="fas fa-brain text-purple-600"></i>
+                                    </div>
+                                    <div>
+                                        <div class="text-sm text-gray-600">Phase 3: Self-Learning CMDB</div>
+                                        <div class="font-semibold">Auto-Updating Graphs</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- The Enterprise Documentation Crisis -->
+    <section class="py-20 bg-gradient-to-br from-red-50 to-orange-50">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <div class="inline-flex items-center px-4 py-2 bg-red-100 rounded-full mb-6">
+                    <i class="fas fa-exclamation-triangle text-red-600 mr-2"></i>
+                    <span class="text-red-700 font-semibold uppercase tracking-wide">The Hidden Crisis</span>
+                </div>
+                <h2 class="text-4xl font-bold text-gray-900 mb-4">
+                    Your Enterprise Knowledge is Trapped and Dying
+                </h2>
+                <p class="text-xl text-gray-700 max-w-3xl mx-auto">
+                    <strong>10+ years</strong> of critical network and security documentation sits dormant in 
+                    Confluence pages, SharePoint folders, and aging wikis - invisible to modern AI systems and 
+                    inaccessible when you need it most.
+                </p>
+            </div>
+            
+            <div class="grid lg:grid-cols-3 gap-8 mb-12">
+                <!-- The Problem -->
+                <div class="bg-white rounded-xl shadow-lg p-6 border-l-4 border-red-500">
+                    <div class="flex items-center mb-4">
+                        <div class="w-12 h-12 bg-red-100 rounded-lg flex items-center justify-center mr-3">
+                            <i class="fas fa-archive text-red-600 text-xl"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-gray-900">Documentation Graveyards</h3>
+                    </div>
+                    <ul class="space-y-3 text-gray-700">
+                        <li class="flex items-start">
+                            <i class="fas fa-skull text-gray-400 mr-2 mt-1"></i>
+                            <span><strong>Engineering docs</strong> from 2014 still define critical systems</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-skull text-gray-400 mr-2 mt-1"></i>
+                            <span><strong>Security runbooks</strong> scattered across 1000s of Confluence pages</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-skull text-gray-400 mr-2 mt-1"></i>
+                            <span><strong>Network diagrams</strong> in outdated Visio files on SharePoint</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-skull text-gray-400 mr-2 mt-1"></i>
+                            <span><strong>Operations guides</strong> known only by retiring engineers</span>
+                        </li>
+                    </ul>
+                </div>
+                
+                <!-- The Risk -->
+                <div class="bg-white rounded-xl shadow-lg p-6 border-l-4 border-orange-500">
+                    <div class="flex items-center mb-4">
+                        <div class="w-12 h-12 bg-orange-100 rounded-lg flex items-center justify-center mr-3">
+                            <i class="fas fa-user-slash text-orange-600 text-xl"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-gray-900">Tribal Knowledge Crisis</h3>
+                    </div>
+                    <ul class="space-y-3 text-gray-700">
+                        <li class="flex items-start">
+                            <i class="fas fa-bomb text-orange-500 mr-2 mt-1"></i>
+                            <span><strong>67% of network knowledge</strong> exists only in people's heads</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-bomb text-orange-500 mr-2 mt-1"></i>
+                            <span><strong>Average tenure: 2.5 years</strong> - knowledge walks out the door</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-bomb text-orange-500 mr-2 mt-1"></i>
+                            <span><strong>3AM incidents</strong> depend on who remembers what</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-bomb text-orange-500 mr-2 mt-1"></i>
+                            <span><strong>$4.5M average cost</strong> of knowledge loss per year</span>
+                        </li>
+                    </ul>
+                </div>
+                
+                <!-- The Impact -->
+                <div class="bg-white rounded-xl shadow-lg p-6 border-l-4 border-yellow-500">
+                    <div class="flex items-center mb-4">
+                        <div class="w-12 h-12 bg-yellow-100 rounded-lg flex items-center justify-center mr-3">
+                            <i class="fas fa-robot text-yellow-600 text-xl"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-gray-900">AI Can't Help You</h3>
+                    </div>
+                    <ul class="space-y-3 text-gray-700">
+                        <li class="flex items-start">
+                            <i class="fas fa-times-circle text-red-500 mr-2 mt-1"></i>
+                            <span><strong>LLMs can't read</strong> your SharePoint or Confluence</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-times-circle text-red-500 mr-2 mt-1"></i>
+                            <span><strong>ChatGPT doesn't know</strong> your network architecture</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-times-circle text-red-500 mr-2 mt-1"></i>
+                            <span><strong>Copilots fail</strong> without access to your documentation</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-times-circle text-red-500 mr-2 mt-1"></i>
+                            <span><strong>Automation stops</strong> at undocumented processes</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="bg-gradient-to-r from-gray-900 to-indigo-900 rounded-2xl p-8 text-white">
+                <h3 class="text-2xl font-bold mb-4 text-center">
+                    The Data Speaks for Itself
+                </h3>
+                <div class="grid md:grid-cols-4 gap-6 text-center">
+                    <div>
+                        <div class="text-4xl font-bold text-yellow-400 mb-2">10+ Years</div>
+                        <div class="text-sm opacity-90">of documentation debt</div>
+                    </div>
+                    <div>
+                        <div class="text-4xl font-bold text-red-400 mb-2">80%</div>
+                        <div class="text-sm opacity-90">of knowledge undiscoverable</div>
+                    </div>
+                    <div>
+                        <div class="text-4xl font-bold text-orange-400 mb-2">45 mins</div>
+                        <div class="text-sm opacity-90">average search time per incident</div>
+                    </div>
+                    <div>
+                        <div class="text-4xl font-bold text-pink-400 mb-2">$2.5M</div>
+                        <div class="text-sm opacity-90">annual cost of rework</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- VisionML Platform Solution -->
+    <section class="py-20 bg-gradient-to-br from-green-50 to-blue-50">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <div class="inline-flex items-center px-4 py-2 bg-green-100 rounded-full mb-6">
+                    <i class="fas fa-lightbulb text-green-600 mr-2"></i>
+                    <span class="text-green-700 font-semibold">The Solution</span>
+                </div>
+                <h2 class="text-4xl font-bold text-gray-900 mb-4">
+                    Transform Dead Documentation into Living AI Knowledge
+                </h2>
+                <p class="text-xl text-gray-700 max-w-3xl mx-auto">
+                    NetIntel-OCR liberates your trapped knowledge, making it LLM-ingestible and available through 
+                    MCP (Model Context Protocol) for conversational AI and agentic workflow automation.
+                </p>
+            </div>
+            
+            <div class="grid lg:grid-cols-2 gap-12 items-center">
+                <div>
+                    <h3 class="text-2xl font-bold text-gray-900 mb-6">
+                        From Documentation Graveyards to AI-Ready Knowledge
+                    </h3>
+                    <div class="space-y-4">
+                        <div class="flex items-start">
+                            <div class="w-10 h-10 bg-green-100 rounded-lg flex items-center justify-center flex-shrink-0 mt-1">
+                                <span class="text-green-600 font-bold">1</span>
+                            </div>
+                            <div class="ml-4">
+                                <h4 class="font-semibold text-gray-900 mb-1">Extract Everything</h4>
+                                <p class="text-gray-600">Scan Confluence, SharePoint, wikis, PDFs - pull out 10+ years of dormant knowledge</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start">
+                            <div class="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center flex-shrink-0 mt-1">
+                                <span class="text-blue-600 font-bold">2</span>
+                            </div>
+                            <div class="ml-4">
+                                <h4 class="font-semibold text-gray-900 mb-1">Structure for AI</h4>
+                                <p class="text-gray-600">Convert to vectors, knowledge graphs, and LLM-digestible formats</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start">
+                            <div class="w-10 h-10 bg-purple-100 rounded-lg flex items-center justify-center flex-shrink-0 mt-1">
+                                <span class="text-purple-600 font-bold">3</span>
+                            </div>
+                            <div class="ml-4">
+                                <h4 class="font-semibold text-gray-900 mb-1">Serve via MCP</h4>
+                                <p class="text-gray-600">Model Context Protocol makes knowledge available to any LLM or AI agent</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start">
+                            <div class="w-10 h-10 bg-indigo-100 rounded-lg flex items-center justify-center flex-shrink-0 mt-1">
+                                <span class="text-indigo-600 font-bold">4</span>
+                            </div>
+                            <div class="ml-4">
+                                <h4 class="font-semibold text-gray-900 mb-1">Enable Intelligence</h4>
+                                <p class="text-gray-600">Power conversational AI, automated workflows, and intelligent operations</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div>
+                    <div class="bg-white rounded-2xl shadow-xl p-8">
+                        <h3 class="text-xl font-bold text-gray-900 mb-6 text-center">
+                            <i class="fas fa-plug text-indigo-600 mr-2"></i>
+                            MCP: The Bridge to AI
+                        </h3>
+                        <div class="bg-gray-50 rounded-lg p-4 mb-6 font-mono text-sm">
+                            <div class="text-green-600"># MCP Service Endpoint</div>
+                            <div>POST /mcp/v1/context</div>
+                            <div class="text-gray-500">{</div>
+                            <div class="ml-4">"query": "network topology for datacenter-1",</div>
+                            <div class="ml-4">"sources": ["confluence", "sharepoint", "runbooks"],</div>
+                            <div class="ml-4">"format": "knowledge-graph"</div>
+                            <div class="text-gray-500">}</div>
+                        </div>
+                        <div class="space-y-3">
+                            <div class="flex items-center">
+                                <i class="fas fa-check-circle text-green-500 mr-3"></i>
+                                <span class="text-gray-700">Works with Private Inferencing vLLM, OLLAMA, MLX models</span>
+                            </div>
+                            <div class="flex items-center">
+                                <i class="fas fa-check-circle text-green-500 mr-3"></i>
+                                <span class="text-gray-700">Private LoRA Fine-Tuning using NVIDIA EdgeAI Hardware</span>
+                            </div>
+                            <div class="flex items-center">
+                                <i class="fas fa-check-circle text-green-500 mr-3"></i>
+                                <span class="text-gray-700">Enables GitHub Copilot for infrastructure</span>
+                            </div>
+                            <div class="flex items-center">
+                                <i class="fas fa-check-circle text-green-500 mr-3"></i>
+                                <span class="text-gray-700">Powers agentic automation workflows</span>
+                            </div>
+                            <div class="flex items-center">
+                                <i class="fas fa-check-circle text-green-500 mr-3"></i>
+                                <span class="text-gray-700">Maintains security boundaries</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="mt-12 grid md:grid-cols-3 gap-6">
+                <div class="bg-white rounded-xl p-6 shadow-lg text-center">
+                    <div class="text-3xl font-bold text-green-600 mb-2">90%</div>
+                    <div class="text-gray-700 font-semibold">Knowledge Recovery</div>
+                    <div class="text-sm text-gray-600 mt-2">From 10+ years of documentation</div>
+                </div>
+                <div class="bg-white rounded-xl p-6 shadow-lg text-center">
+                    <div class="text-3xl font-bold text-blue-600 mb-2">5 mins</div>
+                    <div class="text-gray-700 font-semibold">To Find Answers</div>
+                    <div class="text-sm text-gray-600 mt-2">Down from 45 minutes</div>
+                </div>
+                <div class="bg-white rounded-xl p-6 shadow-lg text-center">
+                    <div class="text-3xl font-bold text-purple-600 mb-2">100%</div>
+                    <div class="text-gray-700 font-semibold">AI-Accessible</div>
+                    <div class="text-sm text-gray-600 mt-2">Via MCP protocol</div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- VisionML Platform Introduction -->
+    <section class="py-16 bg-white border-b border-gray-200">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="max-w-4xl mx-auto text-center">
+                <div class="inline-flex items-center px-4 py-2 bg-indigo-100 rounded-full mb-6">
+                    <i class="fas fa-info-circle text-indigo-600 mr-2"></i>
+                    <span class="text-indigo-700 font-semibold">The VisionML.Net Platform</span>
+                </div>
+                <h3 class="text-3xl font-bold text-gray-900 mb-6">
+                    VisionML.Net: Your Path to Semantic CMDB
+                </h3>
+                <p class="text-lg text-gray-700 mb-6">
+                    <strong>VisionML.Net</strong> is an enterprise platform designed to transform how organizations manage 
+                    network infrastructure through Semantic CMDB technology. We believe the journey to intelligent, 
+                    self-updating knowledge graphs should be accessible to everyone.
+                </p>
+                <div class="bg-gradient-to-r from-green-50 to-indigo-50 rounded-xl p-6 border border-green-200">
+                    <h4 class="text-xl font-semibold text-gray-900 mb-3">
+                        <i class="fas fa-code-branch text-green-600 mr-2"></i>
+                        Start Today with NetIntel-OCR
+                    </h4>
+                    <p class="text-gray-700">
+                        <strong>NetIntel-OCR</strong> is our open-source foundation - a fully functional, production-ready tool 
+                        that extracts network diagrams, tables, and text from PDFs. It's free, Apache 2.0 licensed, and 
+                        delivers immediate value while serving as your on-ramp to the VisionML.Net platform.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Enterprise Security & Compliance Section -->
+    <section class="py-20 bg-gradient-to-r from-red-900 to-gray-900 text-white">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <div class="inline-flex items-center px-4 py-2 bg-red-500/20 border border-red-500/50 rounded-full mb-6">
+                    <i class="fas fa-lock text-red-400 mr-2"></i>
+                    <span class="text-red-400 font-semibold uppercase tracking-wide">Enterprise Security First</span>
+                </div>
+                <h2 class="text-4xl font-bold mb-4">
+                    100% Private Mode Operation
+                </h2>
+                <p class="text-xl text-gray-300 max-w-3xl mx-auto">
+                    Your data never leaves your infrastructure. Built for the most demanding regulatory 
+                    and compliance requirements.
+                </p>
+            </div>
+            
+            <div class="grid lg:grid-cols-3 gap-8 mb-12">
+                <div class="bg-white/10 backdrop-blur-sm rounded-xl p-6 border border-white/20">
+                    <div class="w-14 h-14 bg-red-500/20 rounded-lg flex items-center justify-center mb-4">
+                        <i class="fas fa-network-wired text-red-400 text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-3">Air-Gapped Deployment</h3>
+                    <p class="text-gray-300">
+                        Operates completely within your firewall. No vectors, knowledge graphs, or data 
+                        ever leave your enterprise boundaries. Perfect for classified environments.
+                    </p>
+                </div>
+                
+                <div class="bg-white/10 backdrop-blur-sm rounded-xl p-6 border border-white/20">
+                    <div class="w-14 h-14 bg-blue-500/20 rounded-lg flex items-center justify-center mb-4">
+                        <i class="fas fa-microchip text-blue-400 text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-3">EdgeAI GPU Processing</h3>
+                    <p class="text-gray-300">
+                        Leverage your on-premise GPU resources for AI processing. No cloud dependencies. 
+                        Supports NVIDIA, AMD, and Intel GPUs for maximum performance.
+                    </p>
+                </div>
+                
+                <div class="bg-white/10 backdrop-blur-sm rounded-xl p-6 border border-white/20">
+                    <div class="w-14 h-14 bg-green-500/20 rounded-lg flex items-center justify-center mb-4">
+                        <i class="fas fa-check-double text-green-400 text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-3">Compliance Certified</h3>
+                    <p class="text-gray-300">
+                        Designed for GDPR, HIPAA, SOC 2, ISO 27001, and government compliance. 
+                        Full audit trails and encryption at rest and in transit.
+                    </p>
+                </div>
+            </div>
+            
+            <div class="bg-white/5 rounded-2xl p-8 border border-white/10">
+                <h3 class="text-2xl font-bold mb-6 text-center">
+                    <i class="fas fa-dharmachakra text-indigo-400 mr-2"></i>
+                    Cloud-Native Kubernetes Architecture
+                </h3>
+                <div class="grid md:grid-cols-2 gap-8">
+                    <div>
+                        <h4 class="text-lg font-semibold mb-4 text-indigo-300">Scalability Without Compromise</h4>
+                        <ul class="space-y-3 text-gray-300">
+                            <li class="flex items-start">
+                                <i class="fas fa-check text-green-400 mr-3 mt-1"></i>
+                                <span>Deploy on your private Kubernetes clusters - on-premise or private cloud</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-check text-green-400 mr-3 mt-1"></i>
+                                <span>Horizontal scaling with distributed processing across edge nodes</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-check text-green-400 mr-3 mt-1"></i>
+                                <span>GPU scheduling for AI workloads with Kubernetes device plugins</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-check text-green-400 mr-3 mt-1"></i>
+                                <span>Multi-tenancy support with namespace isolation</span>
+                            </li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 class="text-lg font-semibold mb-4 text-indigo-300">Zero Trust Security Model</h4>
+                        <ul class="space-y-3 text-gray-300">
+                            <li class="flex items-start">
+                                <i class="fas fa-shield-alt text-yellow-400 mr-3 mt-1"></i>
+                                <span>All data encrypted with customer-managed keys (BYOK)</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-shield-alt text-yellow-400 mr-3 mt-1"></i>
+                                <span>Network policies enforce strict pod-to-pod communication</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-shield-alt text-yellow-400 mr-3 mt-1"></i>
+                                <span>Service mesh with mTLS for all internal communications</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-shield-alt text-yellow-400 mr-3 mt-1"></i>
+                                <span>RBAC and admission controllers for access control</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="mt-12 text-center">
+                <h4 class="text-xl font-semibold mb-4 text-yellow-400">Compliance & Certification Ready</h4>
+                <div class="inline-flex flex-wrap gap-4 justify-center">
+                    <div class="bg-white/10 px-4 py-2 rounded-lg border border-white/20">
+                        <i class="fas fa-shield-alt text-red-400 mr-2"></i>
+                        <span class="text-sm font-semibold">NIST CSF</span>
+                    </div>
+                    <div class="bg-white/10 px-4 py-2 rounded-lg border border-white/20">
+                        <i class="fas fa-lock text-orange-400 mr-2"></i>
+                        <span class="text-sm font-semibold">NIST 800-53</span>
+                    </div>
+                    <div class="bg-white/10 px-4 py-2 rounded-lg border border-white/20">
+                        <i class="fas fa-globe-americas text-green-400 mr-2"></i>
+                        <span class="text-sm">GDPR Compliant</span>
+                    </div>
+                    <div class="bg-white/10 px-4 py-2 rounded-lg border border-white/20">
+                        <i class="fas fa-hospital text-blue-400 mr-2"></i>
+                        <span class="text-sm">HIPAA Ready</span>
+                    </div>
+                    <div class="bg-white/10 px-4 py-2 rounded-lg border border-white/20">
+                        <i class="fas fa-landmark text-yellow-400 mr-2"></i>
+                        <span class="text-sm">FedRAMP Compatible</span>
+                    </div>
+                    <div class="bg-white/10 px-4 py-2 rounded-lg border border-white/20">
+                        <i class="fas fa-certificate text-purple-400 mr-2"></i>
+                        <span class="text-sm">SOC 2 Type II</span>
+                    </div>
+                    <div class="bg-white/10 px-4 py-2 rounded-lg border border-white/20">
+                        <i class="fas fa-award text-indigo-400 mr-2"></i>
+                        <span class="text-sm">ISO 27001</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Stats Section - Semantic CMDB Value -->
+    <section class="py-12 bg-gray-50">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-8">
+                <h3 class="text-2xl font-bold text-gray-900 mb-2">The Semantic CMDB Promise</h3>
+                <p class="text-gray-600">From document extraction today to intelligent operations tomorrow</p>
+            </div>
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-8">
+                <div class="text-center">
+                    <div class="text-4xl font-bold text-indigo-600">70%</div>
+                    <div class="text-gray-600 mt-2">Faster Incident Resolution</div>
+                </div>
+                <div class="text-center">
+                    <div class="text-4xl font-bold text-indigo-600">85%</div>
+                    <div class="text-gray-600 mt-2">Faster Change Planning</div>
+                </div>
+                <div class="text-center">
+                    <div class="text-4xl font-bold text-indigo-600">95%</div>
+                    <div class="text-gray-600 mt-2">Less Audit Time</div>
+                </div>
+                <div class="text-center">
+                    <div class="text-4xl font-bold text-indigo-600">10x</div>
+                    <div class="text-gray-600 mt-2">Better Planning Intelligence</div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Open Source & Vision Section -->
+    <section class="py-20 bg-gradient-to-br from-gray-900 to-indigo-900 text-white">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid lg:grid-cols-2 gap-12 items-center">
+                <div>
+                    <div class="inline-flex items-center px-4 py-2 bg-green-500/20 border border-green-500/50 rounded-full mb-6">
+                        <i class="fas fa-code-branch text-green-400 mr-2"></i>
+                        <span class="text-green-400 font-semibold">Open Source Foundation</span>
+                    </div>
+                    <h2 class="text-4xl font-bold mb-6">
+                        From Open Source Today to<br/>
+                        Self-Learning Enterprise CMDB
+                    </h2>
+                    <p class="text-lg text-gray-300 mb-6">
+                        <strong class="text-white">Current State:</strong> NetIntel-OCR is a fully functional, production-ready 
+                        open-source tool delivering immediate value through intelligent document processing. Extract network diagrams, 
+                        tables, and create searchable vector databases today.
+                    </p>
+                    <p class="text-lg text-gray-300 mb-8">
+                        <strong class="text-white">Future Vision:</strong> Evolution into an enterprise-grade Semantic CMDB platform 
+                        featuring <span class="text-yellow-400 font-semibold">self-updating knowledge graphs</span> that automatically 
+                        learn from network changes, predict cascading impacts, and enable SPARQL-based intelligence queries.
+                    </p>
+                    <div class="flex flex-wrap gap-3">
+                        <div class="bg-white/10 border border-white/20 rounded-lg px-4 py-2">
+                            <i class="fas fa-check text-green-400 mr-2"></i>Apache 2.0 License
+                        </div>
+                        <div class="bg-white/10 border border-white/20 rounded-lg px-4 py-2">
+                            <i class="fas fa-check text-green-400 mr-2"></i>100% On-Premise
+                        </div>
+                        <div class="bg-white/10 border border-white/20 rounded-lg px-4 py-2">
+                            <i class="fas fa-check text-green-400 mr-2"></i>Community Driven
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <div class="bg-white/10 backdrop-blur-sm rounded-2xl p-8 border border-white/20">
+                        <h3 class="text-2xl font-bold mb-6 text-yellow-400">
+                            <i class="fas fa-brain mr-2"></i>Self-Updating Knowledge Graphs
+                        </h3>
+                        <div class="space-y-4">
+                            <div class="flex items-start">
+                                <div class="w-8 h-8 bg-indigo-500/30 rounded-full flex items-center justify-center flex-shrink-0 mt-1">
+                                    <span class="text-sm font-bold">1</span>
+                                </div>
+                                <div class="ml-4">
+                                    <div class="font-semibold mb-1">Continuous Learning</div>
+                                    <div class="text-sm text-gray-400">Automatically detects and incorporates network changes into the knowledge graph</div>
+                                </div>
+                            </div>
+                            <div class="flex items-start">
+                                <div class="w-8 h-8 bg-indigo-500/30 rounded-full flex items-center justify-center flex-shrink-0 mt-1">
+                                    <span class="text-sm font-bold">2</span>
+                                </div>
+                                <div class="ml-4">
+                                    <div class="font-semibold mb-1">Relationship Discovery</div>
+                                    <div class="text-sm text-gray-400">Identifies new connections and dependencies as infrastructure evolves</div>
+                                </div>
+                            </div>
+                            <div class="flex items-start">
+                                <div class="w-8 h-8 bg-indigo-500/30 rounded-full flex items-center justify-center flex-shrink-0 mt-1">
+                                    <span class="text-sm font-bold">3</span>
+                                </div>
+                                <div class="ml-4">
+                                    <div class="font-semibold mb-1">Anomaly Detection</div>
+                                    <div class="text-sm text-gray-400">Learns normal patterns and alerts on configuration drift</div>
+                                </div>
+                            </div>
+                            <div class="flex items-start">
+                                <div class="w-8 h-8 bg-indigo-500/30 rounded-full flex items-center justify-center flex-shrink-0 mt-1">
+                                    <span class="text-sm font-bold">4</span>
+                                </div>
+                                <div class="ml-4">
+                                    <div class="font-semibold mb-1">Predictive Intelligence</div>
+                                    <div class="text-sm text-gray-400">Forecasts impact of changes based on historical patterns</div>
+                                </div>
+                            </div>
+                            <div class="flex items-start">
+                                <div class="w-8 h-8 bg-purple-500/30 rounded-full flex items-center justify-center flex-shrink-0 mt-1">
+                                    <span class="text-sm font-bold">5</span>
+                                </div>
+                                <div class="ml-4">
+                                    <div class="font-semibold mb-1">CMDB Integration</div>
+                                    <div class="text-sm text-gray-400">Auto-updates ServiceNOW, SolarWinds, Device42 with discovered changes</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Features Section -->
+    <section id="features" class="py-20 bg-gray-50">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <h2 class="text-4xl font-bold text-gray-900 mb-4">Building Blocks of Semantic Intelligence</h2>
+                <p class="text-xl text-gray-600">Today's document processing capabilities become tomorrow's knowledge graph foundation</p>
+            </div>
+            
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Feature Card 1 - Predictable OPEX Costs (MOVED TO TOP) -->
+                <div class="feature-card bg-white rounded-xl p-6 shadow-lg border-2 border-green-200">
+                    <div class="w-14 h-14 bg-gradient-to-br from-green-100 to-emerald-100 rounded-lg flex items-center justify-center mb-4">
+                        <i class="fas fa-dollar-sign text-green-600 text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-3">Predictable AI OPEX Costs</h3>
+                    <p class="text-gray-600 mb-4">
+                        Eliminate unpredictable cloud AI spending with local inferencing on existing infrastructure.
+                    </p>
+                    <ul class="space-y-2 text-sm text-gray-600">
+                        <li><i class="fas fa-check text-green-500 mr-2"></i>Fixed costs with on-prem hardware</li>
+                        <li><i class="fas fa-check text-green-500 mr-2"></i>No per-token cloud charges</li>
+                        <li><i class="fas fa-check text-green-500 mr-2"></i>Leverage existing CPU infrastructure</li>
+                        <li><i class="fas fa-check text-green-500 mr-2"></i>Scale without OPEX surprises</li>
+                    </ul>
+                </div>
+                
+                <!-- Feature Card 2 - Local Inferencing (MOVED TO TOP) -->
+                <div class="feature-card bg-white rounded-xl p-6 shadow-lg border-2 border-blue-200">
+                    <div class="w-14 h-14 bg-gradient-to-br from-blue-100 to-indigo-100 rounded-lg flex items-center justify-center mb-4">
+                        <i class="fas fa-home text-blue-600 text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-3">Local-First AI Inferencing</h3>
+                    <p class="text-gray-600 mb-4">
+                        NVIDIA and Apple MLX friendly hardware for dynamic business environments without cloud dependencies.
+                    </p>
+                    <ul class="space-y-2 text-sm text-gray-600">
+                        <li><i class="fas fa-check text-green-500 mr-2"></i>Apple MLX optimization</li>
+                        <li><i class="fas fa-check text-green-500 mr-2"></i>NVIDIA CUDA support</li>
+                        <li><i class="fas fa-check text-green-500 mr-2"></i>CPU-first, GPU when needed</li>
+                        <li><i class="fas fa-check text-green-500 mr-2"></i>Hybrid on-prem/cloud flexibility</li>
+                    </ul>
+                </div>
+                
+                <!-- Feature Card 3 - Private Mode Security (MOVED UP) -->
+                <div class="feature-card bg-white rounded-xl p-6 shadow-lg">
+                    <div class="w-14 h-14 bg-blue-100 rounded-lg flex items-center justify-center mb-4">
+                        <i class="fas fa-shield-alt text-blue-600 text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-3">Private Mode Security</h3>
+                    <p class="text-gray-600 mb-4">
+                        100% private operation - no vectors, data, or knowledge ever leaves your firewall.
+                    </p>
+                    <ul class="space-y-2 text-sm text-gray-600">
+                        <li><i class="fas fa-check text-green-500 mr-2"></i>Air-gapped deployment</li>
+                        <li><i class="fas fa-check text-green-500 mr-2"></i>GDPR/HIPAA compliant</li>
+                        <li><i class="fas fa-check text-green-500 mr-2"></i>Customer-managed keys</li>
+                        <li><i class="fas fa-check text-green-500 mr-2"></i>Zero trust architecture</li>
+                    </ul>
+                </div>
+                
+                <!-- Feature Card 4 - AI Extraction -->
+                <div class="feature-card bg-white rounded-xl p-6 shadow-lg">
+                    <div class="w-14 h-14 bg-indigo-100 rounded-lg flex items-center justify-center mb-4">
+                        <i class="fas fa-brain text-indigo-600 text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-3">AI-Powered Extraction</h3>
+                    <p class="text-gray-600 mb-4">
+                        Automatic detection and extraction of network diagrams, tables, and text using advanced AI models.
+                    </p>
+                    <ul class="space-y-2 text-sm text-gray-600">
+                        <li><i class="fas fa-check text-green-500 mr-2"></i>Multi-model support</li>
+                        <li><i class="fas fa-check text-green-500 mr-2"></i>Vision-language models</li>
+                        <li><i class="fas fa-check text-green-500 mr-2"></i>Ollama/vLLM/LMCache integration</li>
+                    </ul>
+                </div>
+                
+                <!-- Feature Card 5 - EdgeAI GPU -->
+                <div class="feature-card bg-white rounded-xl p-6 shadow-lg">
+                    <div class="w-14 h-14 bg-gradient-to-br from-red-100 to-orange-100 rounded-lg flex items-center justify-center mb-4">
+                        <i class="fas fa-microchip text-red-600 text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-3">EdgeAI GPU Processing</h3>
+                    <p class="text-gray-600 mb-4">
+                        Leverage your on-premise GPU infrastructure for AI workloads. No cloud GPU costs or data transfers.
+                    </p>
+                    <ul class="space-y-2 text-sm text-gray-600">
+                        <li><i class="fas fa-check text-green-500 mr-2"></i>NVIDIA A100/H100 support</li>
+                        <li><i class="fas fa-check text-green-500 mr-2"></i>AMD MI300 compatible</li>
+                        <li><i class="fas fa-check text-green-500 mr-2"></i>Intel Gaudi acceleration</li>
+                        <li><i class="fas fa-check text-green-500 mr-2"></i>Multi-GPU scaling</li>
+                    </ul>
+                </div>
+                
+                <!-- Feature Card 6 - Milvus Vector Database -->
+                <div class="feature-card bg-white rounded-xl p-6 shadow-lg">
+                    <div class="w-14 h-14 bg-green-100 rounded-lg flex items-center justify-center mb-4">
+                        <i class="fas fa-database text-green-600 text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-3">Milvus Vector Database</h3>
+                    <p class="text-gray-600 mb-4">
+                        Enterprise-scale vector search with Milvus integration for lightning-fast semantic queries.
+                    </p>
+                    <ul class="space-y-2 text-sm text-gray-600">
+                        <li><i class="fas fa-check text-green-500 mr-2"></i>Sub-100ms queries</li>
+                        <li><i class="fas fa-check text-green-500 mr-2"></i>Distributed architecture</li>
+                        <li><i class="fas fa-check text-green-500 mr-2"></i>4096-dimensional embeddings</li>
+                    </ul>
+                </div>
+                
+                <!-- Feature Card 7 - Network Diagram Processing -->
+                <div class="feature-card bg-white rounded-xl p-6 shadow-lg">
+                    <div class="w-14 h-14 bg-purple-100 rounded-lg flex items-center justify-center mb-4">
+                        <i class="fas fa-project-diagram text-purple-600 text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-3">Network Diagram Processing</h3>
+                    <p class="text-gray-600 mb-4">
+                        Convert visual network diagrams to structured Mermaid.js format with component detection.
+                    </p>
+                    <ul class="space-y-2 text-sm text-gray-600">
+                        <li><i class="fas fa-check text-green-500 mr-2"></i>Topology mapping</li>
+                        <li><i class="fas fa-check text-green-500 mr-2"></i>Component recognition</li>
+                        <li><i class="fas fa-check text-green-500 mr-2"></i>Connection tracing</li>
+                    </ul>
+                </div>
+                
+                <!-- Feature Card 8 - C++ Performance Core -->
+                <div class="feature-card bg-white rounded-xl p-6 shadow-lg">
+                    <div class="w-14 h-14 bg-yellow-100 rounded-lg flex items-center justify-center mb-4">
+                        <i class="fas fa-bolt text-yellow-600 text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-3">C++ Performance Core</h3>
+                    <p class="text-gray-600 mb-4">
+                        50-100x performance boost with AVX2 SIMD and OpenMP parallelization for deduplication.
+                    </p>
+                    <ul class="space-y-2 text-sm text-gray-600">
+                        <li><i class="fas fa-check text-green-500 mr-2"></i>Three-level deduplication</li>
+                        <li><i class="fas fa-check text-green-500 mr-2"></i>Zero-compilation install</li>
+                        <li><i class="fas fa-check text-green-500 mr-2"></i>SimHash fuzzy matching</li>
+                    </ul>
+                </div>
+                
+                <!-- Feature Card 9 - Cloud-Native Architecture -->
+                <div class="feature-card bg-white rounded-xl p-6 shadow-lg">
+                    <div class="w-14 h-14 bg-red-100 rounded-lg flex items-center justify-center mb-4">
+                        <i class="fas fa-server text-red-600 text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-3">Cloud-Native Architecture</h3>
+                    <p class="text-gray-600 mb-4">
+                        Kubernetes-native deployment with EdgeAI GPU acceleration for private cloud scale.
+                    </p>
+                    <ul class="space-y-2 text-sm text-gray-600">
+                        <li><i class="fas fa-check text-green-500 mr-2"></i>Private Kubernetes clusters</li>
+                        <li><i class="fas fa-check text-green-500 mr-2"></i>EdgeAI GPU scheduling</li>
+                        <li><i class="fas fa-check text-green-500 mr-2"></i>Horizontal auto-scaling</li>
+                        <li><i class="fas fa-check text-green-500 mr-2"></i>Zero cloud dependency</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <!-- MCP Service Highlight -->
+            <div class="mt-12 bg-gradient-to-r from-purple-900 to-indigo-900 rounded-2xl p-8 text-white">
+                <div class="text-center mb-8">
+                    <div class="inline-flex items-center px-4 py-2 bg-purple-500/20 border border-purple-500/50 rounded-full mb-4">
+                        <i class="fas fa-plug text-purple-400 mr-2"></i>
+                        <span class="text-purple-300 font-semibold">MCP Integration</span>
+                    </div>
+                    <h3 class="text-3xl font-bold mb-4">Model Context Protocol (MCP) Service</h3>
+                    <p class="text-xl text-purple-200 max-w-3xl mx-auto">
+                        Transform your 10+ years of trapped documentation into LLM-ingestible knowledge. 
+                        MCP makes your enterprise knowledge available to any AI system or automation workflow.
+                    </p>
+                </div>
+                
+                <div class="grid lg:grid-cols-3 gap-6">
+                    <div class="bg-white/10 backdrop-blur-sm rounded-xl p-6 border border-white/20">
+                        <div class="w-12 h-12 bg-purple-500/20 rounded-lg flex items-center justify-center mb-4">
+                            <i class="fas fa-comments text-purple-400 text-xl"></i>
+                        </div>
+                        <h4 class="text-lg font-semibold mb-3">Private Conversational AI</h4>
+                        <p class="text-purple-200 text-sm">
+                            Enable private LLMs via vLLM, OLLAMA, and MLX to answer questions about your network 
+                            infrastructure. Fine-tune models with LoRA on NVIDIA EdgeAI hardware.
+                        </p>
+                    </div>
+                    
+                    <div class="bg-white/10 backdrop-blur-sm rounded-xl p-6 border border-white/20">
+                        <div class="w-12 h-12 bg-indigo-500/20 rounded-lg flex items-center justify-center mb-4">
+                            <i class="fas fa-robot text-indigo-400 text-xl"></i>
+                        </div>
+                        <h4 class="text-lg font-semibold mb-3">Agentic Workflows</h4>
+                        <p class="text-indigo-200 text-sm">
+                            Power autonomous agents that can navigate your documentation, understand dependencies, 
+                            and execute complex network operations.
+                        </p>
+                    </div>
+                    
+                    <div class="bg-white/10 backdrop-blur-sm rounded-xl p-6 border border-white/20">
+                        <div class="w-12 h-12 bg-blue-500/20 rounded-lg flex items-center justify-center mb-4">
+                            <i class="fas fa-sync-alt text-blue-400 text-xl"></i>
+                        </div>
+                        <h4 class="text-lg font-semibold mb-3">Knowledge Sync</h4>
+                        <p class="text-blue-200 text-sm">
+                            Continuously extract from Confluence, SharePoint, and wikis. Keep your AI knowledge 
+                            base current with automated synchronization.
+                        </p>
+                    </div>
+                </div>
+                
+                <div class="mt-8 bg-black/30 rounded-lg p-6">
+                    <h4 class="text-lg font-semibold mb-4 text-center">MCP in Action</h4>
+                    <div class="grid md:grid-cols-2 gap-6">
+                        <div class="font-mono text-sm">
+                            <div class="text-green-400 mb-2"># Query your enterprise knowledge</div>
+                            <div class="bg-black/50 rounded p-3">
+                                <div class="text-gray-300">$ netintel-ocr --mcp-query \</div>
+                                <div class="text-yellow-300 ml-4">"Show me the firewall rules for DMZ"</div>
+                                <div class="text-gray-500 mt-2"># Returns from 10 years of docs:</div>
+                                <div class="text-green-300">✓ Confluence: 2019 Security Runbook</div>
+                                <div class="text-green-300">✓ SharePoint: 2021 Network Diagram</div>
+                                <div class="text-green-300">✓ Wiki: 2023 Change Request #1247</div>
+                            </div>
+                        </div>
+                        <div class="font-mono text-sm">
+                            <div class="text-green-400 mb-2"># Private LLM with your data</div>
+                            <div class="bg-black/50 rounded p-3">
+                                <div class="text-gray-300">$ export MCP_ENDPOINT=localhost:8001</div>
+                                <div class="text-gray-300">$ vllm serve --model llama3-finetuned</div>
+                                <div class="text-yellow-300 mt-2">> "What's the VLAN config for Building A?"</div>
+                                <div class="text-gray-500 mt-2"># Private LLM responds with YOUR data:</div>
+                                <div class="text-blue-300">"Based on your documentation from</div>
+                                <div class="text-blue-300">2018-2024, Building A uses VLANs</div>
+                                <div class="text-blue-300">100-150 for production..."</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Architecture Section -->
+    <section id="architecture" class="py-20 bg-white">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <h2 class="text-4xl font-bold text-gray-900 mb-4">Private Cloud-Native Architecture</h2>
+                <p class="text-xl text-gray-600">Deploy on your infrastructure - from edge nodes to private Kubernetes clusters</p>
+                <div class="mt-6 flex flex-wrap gap-3 justify-center">
+                    <span class="bg-red-100 text-red-700 px-3 py-1 rounded-full text-sm font-semibold">
+                        <i class="fas fa-lock mr-1"></i>100% Private
+                    </span>
+                    <span class="bg-blue-100 text-blue-700 px-3 py-1 rounded-full text-sm font-semibold">
+                        <i class="fas fa-dharmachakra mr-1"></i>Kubernetes Native
+                    </span>
+                    <span class="bg-green-100 text-green-700 px-3 py-1 rounded-full text-sm font-semibold">
+                        <i class="fas fa-microchip mr-1"></i>EdgeAI Ready
+                    </span>
+                </div>
+            </div>
+            
+            <div class="bg-gray-50 rounded-2xl p-8">
+                <div class="grid lg:grid-cols-3 gap-8">
+                    <!-- CLI Layer -->
+                    <div class="space-y-4">
+                        <h3 class="text-lg font-semibold text-gray-900 mb-4">
+                            <i class="fas fa-terminal text-indigo-600 mr-2"></i>CLI Entry Points
+                        </h3>
+                        <div class="space-y-3">
+                            <div class="bg-white p-3 rounded-lg shadow-sm">
+                                <code class="text-sm">--init</code>
+                                <p class="text-xs text-gray-600 mt-1">Project initialization</p>
+                            </div>
+                            <div class="bg-white p-3 rounded-lg shadow-sm">
+                                <code class="text-sm">--batch-ingest</code>
+                                <p class="text-xs text-gray-600 mt-1">Parallel processing</p>
+                            </div>
+                            <div class="bg-white p-3 rounded-lg shadow-sm">
+                                <code class="text-sm">--query</code>
+                                <p class="text-xs text-gray-600 mt-1">Vector search</p>
+                            </div>
+                            <div class="bg-white p-3 rounded-lg shadow-sm">
+                                <code class="text-sm">--api / --mcp</code>
+                                <p class="text-xs text-gray-600 mt-1">Server modes</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Processing Pipeline -->
+                    <div class="space-y-4">
+                        <h3 class="text-lg font-semibold text-gray-900 mb-4">
+                            <i class="fas fa-cogs text-green-600 mr-2"></i>Processing Pipeline
+                        </h3>
+                        <div class="space-y-3">
+                            <div class="bg-white p-3 rounded-lg shadow-sm">
+                                <div class="font-medium text-sm">Text Extraction</div>
+                                <p class="text-xs text-gray-600 mt-1">nanonets-ocr model</p>
+                            </div>
+                            <div class="bg-white p-3 rounded-lg shadow-sm">
+                                <div class="font-medium text-sm">Network Detection</div>
+                                <p class="text-xs text-gray-600 mt-1">qwen2.5vl model</p>
+                            </div>
+                            <div class="bg-white p-3 rounded-lg shadow-sm">
+                                <div class="font-medium text-sm">Table Extraction</div>
+                                <p class="text-xs text-gray-600 mt-1">pdfplumber library</p>
+                            </div>
+                            <div class="bg-white p-3 rounded-lg shadow-sm">
+                                <div class="font-medium text-sm">Vector Generation</div>
+                                <p class="text-xs text-gray-600 mt-1">Milvus/LanceDB</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Storage Layer -->
+                    <div class="space-y-4">
+                        <h3 class="text-lg font-semibold text-gray-900 mb-4">
+                            <i class="fas fa-database text-purple-600 mr-2"></i>Storage & Integration
+                        </h3>
+                        <div class="space-y-3">
+                            <div class="bg-white p-3 rounded-lg shadow-sm">
+                                <div class="font-medium text-sm">Milvus</div>
+                                <p class="text-xs text-gray-600 mt-1">Vector database</p>
+                            </div>
+                            <div class="bg-white p-3 rounded-lg shadow-sm">
+                                <div class="font-medium text-sm">MinIO/S3</div>
+                                <p class="text-xs text-gray-600 mt-1">Object storage</p>
+                            </div>
+                            <div class="bg-white p-3 rounded-lg shadow-sm">
+                                <div class="font-medium text-sm">etcd</div>
+                                <p class="text-xs text-gray-600 mt-1">Metadata store</p>
+                            </div>
+                            <div class="bg-white p-3 rounded-lg shadow-sm">
+                                <div class="font-medium text-sm">REST API</div>
+                                <p class="text-xs text-gray-600 mt-1">Integration endpoint</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Deployment Section -->
+    <section id="deployment" class="py-20 bg-gray-50">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <h2 class="text-4xl font-bold text-gray-900 mb-4">Private Deployment Options</h2>
+                <p class="text-xl text-gray-600">Scale within your firewall - from edge to enterprise</p>
+                <div class="mt-4 inline-flex items-center px-4 py-2 bg-red-100 rounded-full">
+                    <i class="fas fa-shield-alt text-red-600 mr-2"></i>
+                    <span class="text-red-700 font-semibold">All deployments run 100% on your infrastructure</span>
+                </div>
+            </div>
+            
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <!-- Minimal -->
+                <div class="bg-white rounded-xl p-6 shadow-lg border-2 border-transparent hover:border-indigo-500 transition">
+                    <div class="text-center mb-4">
+                        <div class="w-16 h-16 bg-indigo-100 rounded-full flex items-center justify-center mx-auto mb-3">
+                            <i class="fas fa-laptop text-indigo-600 text-2xl"></i>
+                        </div>
+                        <h3 class="text-xl font-semibold">Minimal</h3>
+                        <p class="text-gray-600 text-sm mt-2">Personal use</p>
+                    </div>
+                    <ul class="space-y-2 text-sm text-gray-600">
+                        <li><i class="fas fa-users text-gray-400 mr-2"></i>1-5 users</li>
+                        <li><i class="fas fa-file text-gray-400 mr-2"></i>&lt;10 docs/day</li>
+                        <li><i class="fas fa-clock text-gray-400 mr-2"></i>5 min setup</li>
+                        <li><i class="fas fa-memory text-gray-400 mr-2"></i>2GB RAM</li>
+                    </ul>
+                    <button class="w-full mt-4 bg-gray-100 text-gray-700 py-2 rounded-lg hover:bg-gray-200 transition">
+                        Quick Start
+                    </button>
+                </div>
+                
+                <!-- Small -->
+                <div class="bg-white rounded-xl p-6 shadow-lg border-2 border-transparent hover:border-indigo-500 transition">
+                    <div class="text-center mb-4">
+                        <div class="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-3">
+                            <i class="fas fa-building text-green-600 text-2xl"></i>
+                        </div>
+                        <h3 class="text-xl font-semibold">Small</h3>
+                        <p class="text-gray-600 text-sm mt-2">Team use</p>
+                    </div>
+                    <ul class="space-y-2 text-sm text-gray-600">
+                        <li><i class="fas fa-users text-gray-400 mr-2"></i>5-20 users</li>
+                        <li><i class="fas fa-file text-gray-400 mr-2"></i>10-50 docs/day</li>
+                        <li><i class="fas fa-clock text-gray-400 mr-2"></i>15 min setup</li>
+                        <li><i class="fas fa-memory text-gray-400 mr-2"></i>4GB RAM</li>
+                    </ul>
+                    <button class="w-full mt-4 bg-gray-100 text-gray-700 py-2 rounded-lg hover:bg-gray-200 transition">
+                        Deploy
+                    </button>
+                </div>
+                
+                <!-- Medium -->
+                <div class="bg-white rounded-xl p-6 shadow-lg border-2 border-transparent hover:border-indigo-500 transition">
+                    <div class="text-center mb-4">
+                        <div class="w-16 h-16 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-3">
+                            <i class="fas fa-city text-purple-600 text-2xl"></i>
+                        </div>
+                        <h3 class="text-xl font-semibold">Medium</h3>
+                        <p class="text-gray-600 text-sm mt-2">Department</p>
+                    </div>
+                    <ul class="space-y-2 text-sm text-gray-600">
+                        <li><i class="fas fa-users text-gray-400 mr-2"></i>20-100 users</li>
+                        <li><i class="fas fa-file text-gray-400 mr-2"></i>50-200 docs/day</li>
+                        <li><i class="fas fa-clock text-gray-400 mr-2"></i>30 min setup</li>
+                        <li><i class="fas fa-memory text-gray-400 mr-2"></i>8GB RAM</li>
+                    </ul>
+                    <button class="w-full mt-4 bg-gray-100 text-gray-700 py-2 rounded-lg hover:bg-gray-200 transition">
+                        Deploy
+                    </button>
+                </div>
+                
+                <!-- Enterprise -->
+                <div class="bg-gradient-to-br from-indigo-500 to-purple-600 text-white rounded-xl p-6 shadow-lg transform hover:scale-105 transition">
+                    <div class="text-center mb-4">
+                        <div class="w-16 h-16 bg-white/20 rounded-full flex items-center justify-center mx-auto mb-3">
+                            <i class="fas fa-globe text-white text-2xl"></i>
+                        </div>
+                        <h3 class="text-xl font-semibold">Enterprise</h3>
+                        <p class="text-indigo-100 text-sm mt-2">Organization-wide</p>
+                    </div>
+                    <ul class="space-y-2 text-sm">
+                        <li><i class="fas fa-users text-indigo-200 mr-2"></i>100+ users</li>
+                        <li><i class="fas fa-file text-indigo-200 mr-2"></i>200+ docs/day</li>
+                        <li><i class="fas fa-clock text-indigo-200 mr-2"></i>1 hour setup</li>
+                        <li><i class="fas fa-memory text-indigo-200 mr-2"></i>16GB+ RAM</li>
+                    </ul>
+                    <button class="w-full mt-4 bg-white text-indigo-600 py-2 rounded-lg hover:bg-indigo-50 transition font-semibold">
+                        Contact Sales
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Quick Start Code -->
+            <div class="mt-16 bg-gray-900 rounded-xl p-8 text-white">
+                <h3 class="text-2xl font-bold mb-6">Quick Start in 5 Minutes (100% Private)</h3>
+                <div class="bg-red-900/30 border border-red-500/50 rounded-lg p-4 mb-6">
+                    <i class="fas fa-info-circle text-red-400 mr-2"></i>
+                    <span class="text-red-200">All processing happens on your infrastructure. No data ever leaves your network.</span>
+                </div>
+                <div class="grid lg:grid-cols-2 gap-8">
+                    <div>
+                        <h4 class="text-lg font-semibold mb-3 text-indigo-400">Install & Setup</h4>
+                        <div class="bg-black/50 rounded-lg p-4 font-mono text-sm">
+                            <div class="text-green-400"># Install NetIntel-OCR</div>
+                            <div>pip install netintel-ocr</div>
+                            <div class="mt-2 text-green-400"># Install high-performance Ollama/vLLM/LMCache</div>
+                            <div>curl -fsSL https://ollama.com/install.sh | sh</div>
+                            <div>ollama serve</div>
+                            <div class="mt-2 text-green-400"># Pull required models</div>
+                            <div>ollama pull nanonets-ocr-s:latest</div>
+                            <div>ollama pull qwen2.5vl:latest</div>
+                        </div>
+                    </div>
+                    <div>
+                        <h4 class="text-lg font-semibold mb-3 text-indigo-400">Process Your First PDF</h4>
+                        <div class="bg-black/50 rounded-lg p-4 font-mono text-sm">
+                            <div class="text-green-400"># Process a document</div>
+                            <div>netintel-ocr document.pdf</div>
+                            <div class="mt-2 text-green-400"># With Docker support</div>
+                            <div>netintel-ocr --init --deployment-scale minimal</div>
+                            <div>cd netintel-ocr/docker</div>
+                            <div>docker-compose -f docker-compose.minimal.yml up</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Semantic CMDB Journey Section -->
+    <section class="py-20 bg-white">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <h2 class="text-4xl font-bold text-gray-900 mb-4">The Semantic CMDB Revolution</h2>
+                <p class="text-xl text-gray-600">From static documentation to intelligent, self-aware network knowledge</p>
+            </div>
+            
+            <div class="grid lg:grid-cols-2 gap-12 items-center mb-16">
+                <div>
+                    <h3 class="text-3xl font-bold text-gray-900 mb-6">Today: Document Intelligence</h3>
+                    <div class="space-y-4">
+                        <div class="flex items-start">
+                            <div class="w-8 h-8 bg-green-100 rounded-full flex items-center justify-center flex-shrink-0 mt-1">
+                                <i class="fas fa-check text-green-600 text-sm"></i>
+                            </div>
+                            <div class="ml-4">
+                                <div class="font-semibold">Extract Network Diagrams</div>
+                                <div class="text-gray-600">Convert PDFs to structured Mermaid.js format</div>
+                            </div>
+                        </div>
+                        <div class="flex items-start">
+                            <div class="w-8 h-8 bg-green-100 rounded-full flex items-center justify-center flex-shrink-0 mt-1">
+                                <i class="fas fa-check text-green-600 text-sm"></i>
+                            </div>
+                            <div class="ml-4">
+                                <div class="font-semibold">Structure Configuration Data</div>
+                                <div class="text-gray-600">Tables become queryable JSON</div>
+                            </div>
+                        </div>
+                        <div class="flex items-start">
+                            <div class="w-8 h-8 bg-green-100 rounded-full flex items-center justify-center flex-shrink-0 mt-1">
+                                <i class="fas fa-check text-green-600 text-sm"></i>
+                            </div>
+                            <div class="ml-4">
+                                <div class="font-semibold">Vector Search</div>
+                                <div class="text-gray-600">Find documents 70% faster</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div>
+                    <h3 class="text-3xl font-bold text-gray-900 mb-6">Tomorrow: Semantic CMDB</h3>
+                    <div class="space-y-4">
+                        <div class="flex items-start">
+                            <div class="w-8 h-8 bg-purple-100 rounded-full flex items-center justify-center flex-shrink-0 mt-1">
+                                <i class="fas fa-sync text-purple-600 text-sm"></i>
+                            </div>
+                            <div class="ml-4">
+                                <div class="font-semibold">Auto-Update Existing CMDBs</div>
+                                <div class="text-gray-600">Sync with ServiceNOW, SolarWinds, Device42</div>
+                            </div>
+                        </div>
+                        <div class="flex items-start">
+                            <div class="w-8 h-8 bg-purple-100 rounded-full flex items-center justify-center flex-shrink-0 mt-1">
+                                <i class="fas fa-brain text-purple-600 text-sm"></i>
+                            </div>
+                            <div class="ml-4">
+                                <div class="font-semibold">Understand Relationships</div>
+                                <div class="text-gray-600">RDF triples express network connections</div>
+                            </div>
+                        </div>
+                        <div class="flex items-start">
+                            <div class="w-8 h-8 bg-purple-100 rounded-full flex items-center justify-center flex-shrink-0 mt-1">
+                                <i class="fas fa-search-plus text-purple-600 text-sm"></i>
+                            </div>
+                            <div class="ml-4">
+                                <div class="font-semibold">Predict Impacts</div>
+                                <div class="text-gray-600">SPARQL queries reveal dependencies</div>
+                            </div>
+                        </div>
+                        <div class="flex items-start">
+                            <div class="w-8 h-8 bg-purple-100 rounded-full flex items-center justify-center flex-shrink-0 mt-1">
+                                <i class="fas fa-magic text-purple-600 text-sm"></i>
+                            </div>
+                            <div class="ml-4">
+                                <div class="font-semibold">Self-Updating Intelligence</div>
+                                <div class="text-gray-600">Living knowledge that evolves with your network</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Evolution Timeline -->
+            <div class="bg-gradient-to-r from-indigo-50 to-purple-50 rounded-2xl p-8">
+                <h3 class="text-2xl font-bold text-center mb-8">The Evolution Path</h3>
+                <div class="grid md:grid-cols-3 gap-8">
+                    <div class="text-center">
+                        <div class="w-16 h-16 bg-green-500 text-white rounded-full flex items-center justify-center mx-auto mb-4">
+                            <i class="fas fa-play text-2xl"></i>
+                        </div>
+                        <h4 class="text-xl font-semibold mb-2">Phase 1: Available Now</h4>
+                        <p class="text-gray-600">Document extraction, vector search, structured data</p>
+                    </div>
+                    <div class="text-center">
+                        <div class="w-16 h-16 bg-yellow-500 text-white rounded-full flex items-center justify-center mx-auto mb-4">
+                            <i class="fas fa-code-branch text-2xl"></i>
+                        </div>
+                        <h4 class="text-xl font-semibold mb-2">Phase 2: Q2 2025</h4>
+                        <p class="text-gray-600">RDF generation, knowledge graphs, basic queries</p>
+                    </div>
+                    <div class="text-center">
+                        <div class="w-16 h-16 bg-purple-500 text-white rounded-full flex items-center justify-center mx-auto mb-4">
+                            <i class="fas fa-brain text-2xl"></i>
+                        </div>
+                        <h4 class="text-xl font-semibold mb-2">Phase 3: Future</h4>
+                        <p class="text-gray-600">Full semantic intelligence, automated operations</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Industry Focus Section -->
+    <section class="py-20 bg-gradient-to-br from-blue-50 to-indigo-50">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <div class="inline-flex items-center px-4 py-2 bg-blue-100 rounded-full mb-6">
+                    <i class="fas fa-industry text-blue-700 mr-2"></i>
+                    <span class="text-blue-700 font-semibold">Industry Focus</span>
+                </div>
+                <h2 class="text-4xl font-bold text-gray-900 mb-4">
+                    Purpose-Built for Critical Infrastructure
+                </h2>
+                <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+                    VisionML.Net is designed specifically for industries where network documentation accuracy, 
+                    security, and compliance are mission-critical.
+                </p>
+            </div>
+            
+            <div class="grid lg:grid-cols-3 gap-8">
+                <!-- Telco -->
+                <div class="bg-white rounded-xl shadow-xl p-8 border-t-4 border-blue-600">
+                    <div class="flex items-center mb-6">
+                        <div class="w-16 h-16 bg-blue-100 rounded-lg flex items-center justify-center mr-4">
+                            <i class="fas fa-broadcast-tower text-blue-600 text-2xl"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-2xl font-bold text-gray-900">Telecommunications</h3>
+                            <p class="text-sm text-gray-600">5G, SD-WAN, Network Slicing</p>
+                        </div>
+                    </div>
+                    <div class="space-y-4 mb-6">
+                        <div class="flex items-start">
+                            <i class="fas fa-check-circle text-green-500 mr-3 mt-1"></i>
+                            <div>
+                                <div class="font-semibold">Complex Network Topologies</div>
+                                <div class="text-sm text-gray-600">Handle multi-vendor, multi-technology environments</div>
+                            </div>
+                        </div>
+                        <div class="flex items-start">
+                            <i class="fas fa-check-circle text-green-500 mr-3 mt-1"></i>
+                            <div>
+                                <div class="font-semibold">Service Assurance</div>
+                                <div class="text-sm text-gray-600">Track SLAs and network performance documentation</div>
+                            </div>
+                        </div>
+                        <div class="flex items-start">
+                            <i class="fas fa-check-circle text-green-500 mr-3 mt-1"></i>
+                            <div>
+                                <div class="font-semibold">Regulatory Compliance</div>
+                                <div class="text-sm text-gray-600">Meet FCC, GDPR, and regional requirements</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bg-blue-50 rounded-lg p-4">
+                        <div class="text-sm text-blue-800">
+                            <strong>Key Use Case:</strong> Extract and maintain 5G network slice configurations 
+                            from 10+ years of vendor documentation
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- MSSP -->
+                <div class="bg-white rounded-xl shadow-xl p-8 border-t-4 border-red-600">
+                    <div class="flex items-center mb-6">
+                        <div class="w-16 h-16 bg-red-100 rounded-lg flex items-center justify-center mr-4">
+                            <i class="fas fa-shield-alt text-red-600 text-2xl"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-2xl font-bold text-gray-900">Managed Security</h3>
+                            <p class="text-sm text-gray-600">MSSPs, SOCs, MDR Providers</p>
+                        </div>
+                    </div>
+                    <div class="space-y-4 mb-6">
+                        <div class="flex items-start">
+                            <i class="fas fa-check-circle text-green-500 mr-3 mt-1"></i>
+                            <div>
+                                <div class="font-semibold">Multi-Tenant Architecture</div>
+                                <div class="text-sm text-gray-600">Isolate customer documentation and configurations</div>
+                            </div>
+                        </div>
+                        <div class="flex items-start">
+                            <i class="fas fa-check-circle text-green-500 mr-3 mt-1"></i>
+                            <div>
+                                <div class="font-semibold">Security Runbooks</div>
+                                <div class="text-sm text-gray-600">Convert incident response docs to AI-accessible knowledge</div>
+                            </div>
+                        </div>
+                        <div class="flex items-start">
+                            <i class="fas fa-check-circle text-green-500 mr-3 mt-1"></i>
+                            <div>
+                                <div class="font-semibold">Compliance Automation</div>
+                                <div class="text-sm text-gray-600">NIST CSF, NIST 800-53, SOC 2 documentation</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bg-red-50 rounded-lg p-4">
+                        <div class="text-sm text-red-800">
+                            <strong>Key Use Case:</strong> Transform thousands of security runbooks into 
+                            AI-powered incident response automation
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Healthcare -->
+                <div class="bg-white rounded-xl shadow-xl p-8 border-t-4 border-green-600">
+                    <div class="flex items-center mb-6">
+                        <div class="w-16 h-16 bg-green-100 rounded-lg flex items-center justify-center mr-4">
+                            <i class="fas fa-hospital-alt text-green-600 text-2xl"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-2xl font-bold text-gray-900">Healthcare</h3>
+                            <p class="text-sm text-gray-600">Hospitals, Health Systems, HIEs</p>
+                        </div>
+                    </div>
+                    <div class="space-y-4 mb-6">
+                        <div class="flex items-start">
+                            <i class="fas fa-check-circle text-green-500 mr-3 mt-1"></i>
+                            <div>
+                                <div class="font-semibold">HIPAA Compliance</div>
+                                <div class="text-sm text-gray-600">Maintain PHI security with air-gapped deployment</div>
+                            </div>
+                        </div>
+                        <div class="flex items-start">
+                            <i class="fas fa-check-circle text-green-500 mr-3 mt-1"></i>
+                            <div>
+                                <div class="font-semibold">Medical Device Networks</div>
+                                <div class="text-sm text-gray-600">Document IoMT and clinical system architectures</div>
+                            </div>
+                        </div>
+                        <div class="flex items-start">
+                            <i class="fas fa-check-circle text-green-500 mr-3 mt-1"></i>
+                            <div>
+                                <div class="font-semibold">Disaster Recovery</div>
+                                <div class="text-sm text-gray-600">Maintain critical infrastructure documentation</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bg-green-50 rounded-lg p-4">
+                        <div class="text-sm text-green-800">
+                            <strong>Key Use Case:</strong> Extract medical device network topologies from 
+                            vendor PDFs for security assessments
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="mt-12 bg-gray-900 text-white rounded-2xl p-8">
+                <h3 class="text-2xl font-bold text-center mb-6">Why These Industries Choose VisionML.Net</h3>
+                <div class="grid md:grid-cols-4 gap-6 text-center">
+                    <div>
+                        <div class="text-3xl font-bold text-yellow-400 mb-2">24/7</div>
+                        <div class="text-sm opacity-90">Critical Operations</div>
+                    </div>
+                    <div>
+                        <div class="text-3xl font-bold text-green-400 mb-2">100%</div>
+                        <div class="text-sm opacity-90">Data Sovereignty</div>
+                    </div>
+                    <div>
+                        <div class="text-3xl font-bold text-blue-400 mb-2">Zero</div>
+                        <div class="text-sm opacity-90">Cloud Dependency</div>
+                    </div>
+                    <div>
+                        <div class="text-3xl font-bold text-red-400 mb-2">Full</div>
+                        <div class="text-sm opacity-90">Audit Trail</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Team Credentials Section -->
+    <section class="py-20 bg-gradient-to-r from-gray-900 to-blue-900 text-white">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <div class="inline-flex items-center px-4 py-2 bg-blue-500/20 border border-blue-500/50 rounded-full mb-6">
+                    <i class="fas fa-users text-blue-400 mr-2"></i>
+                    <span class="text-blue-300 font-semibold">Built by Experts</span>
+                </div>
+                <h2 class="text-4xl font-bold mb-4">
+                    Created by Network Security Professionals
+                </h2>
+                <p class="text-xl text-blue-200 max-w-3xl mx-auto">
+                    VisionML.Net is built by proven network security professionals with 15+ years of 
+                    open-source experience, DoD expertise, and collaboration with IFML Research Labs at UT Austin.
+                </p>
+            </div>
+            
+            <div class="grid lg:grid-cols-3 gap-8 mb-12">
+                <div class="bg-white/10 backdrop-blur-sm rounded-xl p-6 border border-white/20">
+                    <div class="flex items-center mb-4">
+                        <div class="w-12 h-12 bg-indigo-500/20 rounded-lg flex items-center justify-center mr-3">
+                            <i class="fas fa-network-wired text-indigo-400 text-xl"></i>
+                        </div>
+                        <h3 class="text-xl font-bold">CNCF Contributors</h3>
+                    </div>
+                    <p class="text-blue-200 mb-4">
+                        Core contributors to Cloud Native Computing Foundation projects including 
+                        Kubernetes networking and service mesh architectures.
+                    </p>
+                    <ul class="space-y-2 text-sm text-gray-300">
+                        <li><i class="fas fa-code-branch text-green-400 mr-2"></i>Kubernetes CNI plugins</li>
+                        <li><i class="fas fa-code-branch text-green-400 mr-2"></i>Envoy proxy contributions</li>
+                        <li><i class="fas fa-code-branch text-green-400 mr-2"></i>Istio service mesh</li>
+                    </ul>
+                </div>
+                
+                <div class="bg-white/10 backdrop-blur-sm rounded-xl p-6 border border-white/20">
+                    <div class="flex items-center mb-4">
+                        <div class="w-12 h-12 bg-green-500/20 rounded-lg flex items-center justify-center mr-3">
+                            <i class="fas fa-shield-alt text-green-400 text-xl"></i>
+                        </div>
+                        <h3 class="text-xl font-bold">Security Expertise</h3>
+                    </div>
+                    <p class="text-green-200 mb-4">
+                        15+ years securing critical infrastructure for Fortune 500 companies and 
+                        government agencies worldwide.
+                    </p>
+                    <ul class="space-y-2 text-sm text-gray-300">
+                        <li><i class="fas fa-lock text-yellow-400 mr-2"></i>Zero-trust architecture design</li>
+                        <li><i class="fas fa-lock text-yellow-400 mr-2"></i>NIST framework implementation</li>
+                        <li><i class="fas fa-lock text-yellow-400 mr-2"></i>Security automation tools</li>
+                    </ul>
+                </div>
+                
+                <div class="bg-white/10 backdrop-blur-sm rounded-xl p-6 border border-white/20">
+                    <div class="flex items-center mb-4">
+                        <div class="w-12 h-12 bg-purple-500/20 rounded-lg flex items-center justify-center mr-3">
+                            <i class="fas fa-code text-purple-400 text-xl"></i>
+                        </div>
+                        <h3 class="text-xl font-bold">Open Source Leaders</h3>
+                    </div>
+                    <p class="text-purple-200 mb-4">
+                        Maintainers and contributors to major open-source networking and security 
+                        projects used by millions.
+                    </p>
+                    <ul class="space-y-2 text-sm text-gray-300">
+                        <li><i class="fab fa-github text-gray-400 mr-2"></i>10,000+ GitHub contributions</li>
+                        <li><i class="fab fa-github text-gray-400 mr-2"></i>50+ open-source projects</li>
+                        <li><i class="fab fa-github text-gray-400 mr-2"></i>Apache & CNCF members</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="bg-white/5 rounded-2xl p-8 border border-white/10">
+                <h3 class="text-2xl font-bold text-center mb-8">Our Distinguished Background</h3>
+                <div class="grid md:grid-cols-2 gap-8 mb-8">
+                    <div>
+                        <h4 class="text-lg font-semibold mb-4 text-blue-300">Open Source Innovation</h4>
+                        <div class="space-y-3">
+                            <div class="flex items-center">
+                                <i class="fas fa-check text-green-400 mr-3"></i>
+                                <span>Pioneered CNI (Container Network Interface) standards</span>
+                            </div>
+                            <div class="flex items-center">
+                                <i class="fas fa-check text-green-400 mr-3"></i>
+                                <span>Built eBPF-based network observability tools</span>
+                            </div>
+                            <div class="flex items-center">
+                                <i class="fas fa-check text-green-400 mr-3"></i>
+                                <span>Contributed to Calico, Cilium, and Flannel</span>
+                            </div>
+                            <div class="flex items-center">
+                                <i class="fas fa-check text-green-400 mr-3"></i>
+                                <span>Developed Falco runtime security rules</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <h4 class="text-lg font-semibold mb-4 text-red-300">DoD & Government Experience</h4>
+                        <div class="space-y-3">
+                            <div class="flex items-center">
+                                <i class="fas fa-star text-yellow-400 mr-3"></i>
+                                <span>DoD classified network architecture</span>
+                            </div>
+                            <div class="flex items-center">
+                                <i class="fas fa-star text-yellow-400 mr-3"></i>
+                                <span>Zero-trust implementation for defense systems</span>
+                            </div>
+                            <div class="flex items-center">
+                                <i class="fas fa-star text-yellow-400 mr-3"></i>
+                                <span>DISA STIG compliance automation</span>
+                            </div>
+                            <div class="flex items-center">
+                                <i class="fas fa-star text-yellow-400 mr-3"></i>
+                                <span>Critical infrastructure protection</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="bg-gradient-to-r from-orange-900/30 to-red-900/30 rounded-xl p-6 border border-orange-500/30 mb-8">
+                    <div class="flex items-center justify-center mb-4">
+                        <div class="w-16 h-16 bg-orange-500/20 rounded-full flex items-center justify-center">
+                            <i class="fas fa-university text-orange-400 text-2xl"></i>
+                        </div>
+                    </div>
+                    <h4 class="text-xl font-bold text-center mb-3 text-orange-300">
+                        IFML Research Labs - UT Austin Partnership
+                    </h4>
+                    <p class="text-center text-gray-300 mb-4">
+                        Collaborating with the Institute for Foundations of Machine Learning at 
+                        The University of Texas at Austin to advance semantic CMDB technology.
+                    </p>
+                    <div class="grid md:grid-cols-2 gap-4 text-sm">
+                        <div class="bg-black/20 rounded-lg p-3">
+                            <i class="fas fa-microscope text-orange-400 mr-2"></i>
+                            <span>Knowledge graph research</span>
+                        </div>
+                        <div class="bg-black/20 rounded-lg p-3">
+                            <i class="fas fa-brain text-orange-400 mr-2"></i>
+                            <span>Self-learning algorithms</span>
+                        </div>
+                        <div class="bg-black/20 rounded-lg p-3">
+                            <i class="fas fa-network-wired text-orange-400 mr-2"></i>
+                            <span>Network topology inference</span>
+                        </div>
+                        <div class="bg-black/20 rounded-lg p-3">
+                            <i class="fas fa-robot text-orange-400 mr-2"></i>
+                            <span>Automated reasoning systems</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="mt-8 text-center">
+                    <p class="text-lg text-yellow-300 font-semibold">
+                        "Combining 15+ years of open-source expertise, DoD security experience, and 
+                        cutting-edge research from UT Austin's IFML Labs to solve network documentation at scale."
+                    </p>
+                    <p class="text-sm text-gray-400 mt-2">- The VisionML.Net Team</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Enterprise CMDB Integration Section -->
+    <section class="py-20 bg-gradient-to-br from-indigo-50 to-purple-50">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <div class="inline-flex items-center px-4 py-2 bg-purple-100 rounded-full mb-6">
+                    <i class="fas fa-plug text-purple-700 mr-2"></i>
+                    <span class="text-purple-700 font-semibold">Enterprise Integration Roadmap</span>
+                </div>
+                <h2 class="text-4xl font-bold text-gray-900 mb-4">
+                    Seamless Integration with Your Existing CMDB
+                </h2>
+                <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+                    VisionML.Net doesn't replace your CMDB - it makes it intelligent. Our self-updating knowledge graphs 
+                    will automatically sync discovered changes to your existing systems.
+                </p>
+            </div>
+            
+            <div class="grid lg:grid-cols-3 gap-8 mb-12">
+                <!-- ServiceNOW -->
+                <div class="bg-white rounded-xl shadow-lg p-6 border-t-4 border-blue-500">
+                    <div class="flex items-center mb-4">
+                        <div class="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mr-3">
+                            <i class="fas fa-snowflake text-blue-600 text-xl"></i>
+                        </div>
+                        <h3 class="text-xl font-bold">ServiceNOW</h3>
+                    </div>
+                    <p class="text-gray-600 mb-4">
+                        Bi-directional sync with ServiceNOW CMDB. Auto-update CIs, relationships, and dependencies 
+                        discovered from network documentation.
+                    </p>
+                    <ul class="space-y-2 text-sm text-gray-700">
+                        <li><i class="fas fa-check text-green-500 mr-2"></i>Configuration Item updates</li>
+                        <li><i class="fas fa-check text-green-500 mr-2"></i>Relationship mapping</li>
+                        <li><i class="fas fa-check text-green-500 mr-2"></i>Change detection alerts</li>
+                        <li><i class="fas fa-check text-green-500 mr-2"></i>Impact analysis integration</li>
+                    </ul>
+                    <div class="mt-4 text-sm text-purple-600 font-semibold">
+                        Available: Q4 2025
+                    </div>
+                </div>
+                
+                <!-- SolarWinds -->
+                <div class="bg-white rounded-xl shadow-lg p-6 border-t-4 border-orange-500">
+                    <div class="flex items-center mb-4">
+                        <div class="w-12 h-12 bg-orange-100 rounded-lg flex items-center justify-center mr-3">
+                            <i class="fas fa-sun text-orange-600 text-xl"></i>
+                        </div>
+                        <h3 class="text-xl font-bold">SolarWinds</h3>
+                    </div>
+                    <p class="text-gray-600 mb-4">
+                        Enhance SolarWinds Orion with semantic understanding. Auto-discover and update network 
+                        topology from documentation.
+                    </p>
+                    <ul class="space-y-2 text-sm text-gray-700">
+                        <li><i class="fas fa-check text-green-500 mr-2"></i>Network topology sync</li>
+                        <li><i class="fas fa-check text-green-500 mr-2"></i>Device inventory updates</li>
+                        <li><i class="fas fa-check text-green-500 mr-2"></i>Dependency mapping</li>
+                        <li><i class="fas fa-check text-green-500 mr-2"></i>Alert correlation</li>
+                    </ul>
+                    <div class="mt-4 text-sm text-purple-600 font-semibold">
+                        Available: Q1 2026
+                    </div>
+                </div>
+                
+                <!-- Device42 -->
+                <div class="bg-white rounded-xl shadow-lg p-6 border-t-4 border-green-500">
+                    <div class="flex items-center mb-4">
+                        <div class="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center mr-3">
+                            <i class="fas fa-server text-green-600 text-xl"></i>
+                        </div>
+                        <h3 class="text-xl font-bold">Device42</h3>
+                    </div>
+                    <p class="text-gray-600 mb-4">
+                        Complete Device42 integration for hybrid infrastructure management. Keep your asset 
+                        database current with discovered changes.
+                    </p>
+                    <ul class="space-y-2 text-sm text-gray-700">
+                        <li><i class="fas fa-check text-green-500 mr-2"></i>Asset discovery sync</li>
+                        <li><i class="fas fa-check text-green-500 mr-2"></i>Application dependency updates</li>
+                        <li><i class="fas fa-check text-green-500 mr-2"></i>IP address management</li>
+                        <li><i class="fas fa-check text-green-500 mr-2"></i>Rack layout validation</li>
+                    </ul>
+                    <div class="mt-4 text-sm text-purple-600 font-semibold">
+                        Available: Q1 2026
+                    </div>
+                </div>
+            </div>
+            
+            <div class="bg-white rounded-xl shadow-lg p-8">
+                <h3 class="text-2xl font-bold mb-6 text-center">How Auto-Update Works</h3>
+                <div class="grid md:grid-cols-4 gap-6 text-center">
+                    <div>
+                        <div class="w-16 h-16 bg-indigo-100 rounded-full flex items-center justify-center mx-auto mb-3">
+                            <i class="fas fa-file-pdf text-indigo-600 text-2xl"></i>
+                        </div>
+                        <h4 class="font-semibold mb-2">1. Process Docs</h4>
+                        <p class="text-sm text-gray-600">NetIntel-OCR extracts network data from PDFs</p>
+                    </div>
+                    <div>
+                        <div class="w-16 h-16 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-3">
+                            <i class="fas fa-brain text-purple-600 text-2xl"></i>
+                        </div>
+                        <h4 class="font-semibold mb-2">2. Build Knowledge</h4>
+                        <p class="text-sm text-gray-600">Create semantic graphs with relationships</p>
+                    </div>
+                    <div>
+                        <div class="w-16 h-16 bg-yellow-100 rounded-full flex items-center justify-center mx-auto mb-3">
+                            <i class="fas fa-exchange-alt text-yellow-600 text-2xl"></i>
+                        </div>
+                        <h4 class="font-semibold mb-2">3. Detect Changes</h4>
+                        <p class="text-sm text-gray-600">Identify updates and new configurations</p>
+                    </div>
+                    <div>
+                        <div class="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-3">
+                            <i class="fas fa-sync text-green-600 text-2xl"></i>
+                        </div>
+                        <h4 class="font-semibold mb-2">4. Sync CMDBs</h4>
+                        <p class="text-sm text-gray-600">Auto-update ServiceNOW, SolarWinds, Device42</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- ROI Section -->
+    <section class="py-20 bg-gradient-to-r from-indigo-600 to-purple-600 text-white">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <h2 class="text-4xl font-bold mb-4">Start Today, Transform Tomorrow</h2>
+                <p class="text-xl opacity-90">The practical path to revolutionary Semantic CMDB capabilities</p>
+            </div>
+            
+            <div class="grid md:grid-cols-2 gap-12 items-center">
+                <div>
+                    <h3 class="text-2xl font-semibold mb-6">Immediate Value (Available Now)</h3>
+                    <div class="space-y-4">
+                        <div class="flex items-start">
+                            <div class="w-8 h-8 bg-green-500 rounded-full flex items-center justify-center flex-shrink-0 mt-1">
+                                <i class="fas fa-check text-white text-sm"></i>
+                            </div>
+                            <div class="ml-4">
+                                <div class="font-semibold">70% Faster Documentation Search</div>
+                                <div class="text-indigo-100">Find network information instantly with vector search</div>
+                            </div>
+                        </div>
+                        <div class="flex items-start">
+                            <div class="w-8 h-8 bg-green-500 rounded-full flex items-center justify-center flex-shrink-0 mt-1">
+                                <i class="fas fa-check text-white text-sm"></i>
+                            </div>
+                            <div class="ml-4">
+                                <div class="font-semibold">Structured Network Diagrams</div>
+                                <div class="text-indigo-100">Legacy PDFs become queryable Mermaid.js</div>
+                            </div>
+                        </div>
+                        <div class="flex items-start">
+                            <div class="w-8 h-8 bg-green-500 rounded-full flex items-center justify-center flex-shrink-0 mt-1">
+                                <i class="fas fa-check text-white text-sm"></i>
+                            </div>
+                            <div class="ml-4">
+                                <div class="font-semibold">Enterprise-Scale Processing</div>
+                                <div class="text-indigo-100">Handle thousands of documents with complete data sovereignty</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div>
+                    <h3 class="text-2xl font-semibold mb-6">The Semantic CMDB Future</h3>
+                    <div class="bg-white/10 rounded-xl p-6 backdrop-blur-sm">
+                        <div class="mb-6">
+                            <h4 class="text-lg font-semibold mb-2">What Semantic CMDBs Enable:</h4>
+                            <div class="space-y-3 text-indigo-100">
+                                <div class="flex items-center">
+                                    <i class="fas fa-bolt text-yellow-400 mr-3"></i>
+                                    <span>"What services fail if this router goes down?"</span>
+                                </div>
+                                <div class="flex items-center">
+                                    <i class="fas fa-brain text-purple-400 mr-3"></i>
+                                    <span>"Show me all attack paths to our databases"</span>
+                                </div>
+                                <div class="flex items-center">
+                                    <i class="fas fa-chart-line text-green-400 mr-3"></i>
+                                    <span>"Where will we hit capacity limits next?"</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="text-center">
+                            <div class="text-sm text-indigo-200 mb-2">Your phased journey:</div>
+                            <div class="text-lg font-bold">Document Processing → RDF Generation → Full Intelligence</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Pricing Section -->
+    <section id="pricing" class="py-20 bg-gray-50">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <h2 class="text-4xl font-bold text-gray-900 mb-4">Open Source Today, Enterprise Tomorrow</h2>
+                <p class="text-xl text-gray-600">Start free with our open-source foundation, scale to enterprise Semantic CMDB</p>
+            </div>
+            
+            <div class="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+                <!-- Open Source -->
+                <div class="bg-white rounded-xl shadow-lg p-8">
+                    <div class="text-center mb-6">
+                        <h3 class="text-2xl font-bold mb-2">Open Source Core</h3>
+                        <div class="text-4xl font-bold text-gray-900 mb-2">Free</div>
+                        <p class="text-gray-600">Forever - Available Now</p>
+                    </div>
+                    <ul class="space-y-3 mb-8">
+                        <li class="flex items-center">
+                            <i class="fas fa-check text-green-500 mr-3"></i>
+                            <span>Full document processing</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-check text-green-500 mr-3"></i>
+                            <span>Network diagram extraction</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-check text-green-500 mr-3"></i>
+                            <span>Vector search capabilities</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-check text-green-500 mr-3"></i>
+                            <span>Apache 2.0 License</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-check text-green-500 mr-3"></i>
+                            <span>Community support</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-check text-green-500 mr-3"></i>
+                            <span>100% on-premise</span>
+                        </li>
+                    </ul>
+                    <button class="w-full bg-gray-100 text-gray-700 py-3 rounded-lg hover:bg-gray-200 transition">
+                        Get Started
+                    </button>
+                </div>
+                
+                <!-- Professional -->
+                <div class="bg-gradient-to-br from-indigo-500 to-purple-600 text-white rounded-xl shadow-xl p-8 transform scale-105">
+                    <div class="bg-yellow-400 text-yellow-900 text-xs font-bold px-3 py-1 rounded-full inline-block mb-4">
+                        PRIVATE ALPHA
+                    </div>
+                    <div class="text-center mb-6">
+                        <h3 class="text-2xl font-bold mb-2">Semantic CMDB Pro</h3>
+                        <div class="text-4xl font-bold mb-2">Coming Soon</div>
+                        <p class="opacity-90">Q3 2025</p>
+                    </div>
+                    <ul class="space-y-3 mb-8">
+                        <li class="flex items-center">
+                            <i class="fas fa-check mr-3"></i>
+                            <span>Everything in Open Source</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-check mr-3"></i>
+                            <span>RDF triple generation</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-check mr-3"></i>
+                            <span>Knowledge graph builder</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-check mr-3"></i>
+                            <span>SPARQL query interface</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-check mr-3"></i>
+                            <span>Impact analysis</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-check mr-3"></i>
+                            <span>Priority support</span>
+                        </li>
+                    </ul>
+                    <button class="w-full bg-white text-indigo-600 py-3 rounded-lg hover:bg-indigo-50 transition font-semibold">
+                        Start Free Trial
+                    </button>
+                </div>
+                
+                <!-- Enterprise -->
+                <div class="bg-white rounded-xl shadow-lg p-8">
+                    <div class="text-center mb-6">
+                        <h3 class="text-2xl font-bold mb-2">Enterprise Semantic</h3>
+                        <div class="text-4xl font-bold text-gray-900 mb-2">Custom</div>
+                        <p class="text-gray-600">2026 Roadmap</p>
+                    </div>
+                    <ul class="space-y-3 mb-8">
+                        <li class="flex items-center">
+                            <i class="fas fa-check text-green-500 mr-3"></i>
+                            <span>Everything in Pro</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-star text-yellow-500 mr-3"></i>
+                            <span><strong>Self-updating knowledge graphs</strong></span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-star text-yellow-500 mr-3"></i>
+                            <span><strong>ML-powered learning</strong></span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-check text-green-500 mr-3"></i>
+                            <span>Predictive analytics</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-check text-green-500 mr-3"></i>
+                            <span>Anomaly detection</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-check text-green-500 mr-3"></i>
+                            <span>White-glove support</span>
+                        </li>
+                    </ul>
+                    <button class="w-full bg-indigo-600 text-white py-3 rounded-lg hover:bg-indigo-700 transition">
+                        Contact Sales
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- CTA Section -->
+    <section class="py-20 bg-gradient-to-r from-indigo-600 to-purple-600">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h2 class="text-4xl font-bold text-white mb-6">
+                Begin Your Semantic CMDB Transformation
+            </h2>
+            <p class="text-xl text-indigo-100 mb-4 max-w-3xl mx-auto">
+                Don't wait for the future of network intelligence—build it today. NetIntel-OCR delivers immediate value 
+                while laying the foundation for tomorrow's Semantic CMDB revolution.
+            </p>
+            <p class="text-lg text-indigo-200 mb-8 max-w-2xl mx-auto">
+                Start with document extraction, evolve to knowledge graphs, transform to intelligent operations.
+            </p>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                <button class="bg-white text-indigo-600 px-8 py-4 rounded-lg hover:bg-indigo-50 transition font-semibold text-lg">
+                    <i class="fas fa-rocket mr-2"></i> Start Your CMDB Journey
+                </button>
+                <button class="border-2 border-white text-white px-8 py-4 rounded-lg hover:bg-white/10 transition font-semibold text-lg">
+                    <i class="fas fa-route mr-2"></i> Explore the Roadmap
+                </button>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-gray-300">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-12">
+            <div class="grid md:grid-cols-4 gap-8">
+                <div>
+                    <h3 class="text-2xl font-bold text-white mb-4">VisionML.Net</h3>
+                    <p class="text-sm">
+                        Enterprise Semantic CMDB Platform. Transforming network infrastructure 
+                        into self-learning knowledge graphs. Powered by NetIntel-OCR.
+                    </p>
+                </div>
+                <div>
+                    <h4 class="text-white font-semibold mb-4">Product</h4>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="#" class="hover:text-white transition">Features</a></li>
+                        <li><a href="#" class="hover:text-white transition">Architecture</a></li>
+                        <li><a href="#" class="hover:text-white transition">Deployment</a></li>
+                        <li><a href="#" class="hover:text-white transition">Roadmap</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-white font-semibold mb-4">Resources</h4>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="#" class="hover:text-white transition">Documentation</a></li>
+                        <li><a href="#" class="hover:text-white transition">Quick Start Guide</a></li>
+                        <li><a href="#" class="hover:text-white transition">API Reference</a></li>
+                        <li><a href="#" class="hover:text-white transition">GitHub</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-white font-semibold mb-4">Company</h4>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="#" class="hover:text-white transition">About</a></li>
+                        <li><a href="#" class="hover:text-white transition">Blog</a></li>
+                        <li><a href="#" class="hover:text-white transition">Contact</a></li>
+                        <li><a href="#" class="hover:text-white transition">Support</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="border-t border-gray-800 mt-8 pt-8 text-center text-sm">
+                <p>&copy; 2025 VisionML.Net. NetIntel-OCR is licensed under Apache 2.0. Semantic CMDB Pro, coming soon in Q4 2025, will be business friendly opensource licensed under BSL-1.1.</p>
+            </div>
+        </div>
+    </footer>
+    
+</body>
+</html>
